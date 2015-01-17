@@ -12,12 +12,11 @@ define(['underscore', 'backbone',
             this.annonce.fetch({
                 success: this.onAnnonceFetched
             });
-          //this.onAnnonceFetched();
         },
             
         onAnnonceFetched: function() {
             this.$el.html(template({
-                //model: this.annonce.toJSON(),
+                model: this.annonce.toJSON(),
                 config: config
             }));
         }

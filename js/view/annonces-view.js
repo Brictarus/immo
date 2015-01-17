@@ -9,16 +9,17 @@ define(['underscore', 'backbone',
         },
         
         render: function() {
-            this.annonces.fetch({
-                success: this.onAnnoncesFetched
-            });
+          this.annonces.fetch({
+              success: this.onAnnoncesFetched
+          });
         },
             
         onAnnoncesFetched: function() {
-            this.$el.html(template({
-                collection: this.annonces.toJSON(),
-                config: config
-            }));
+          this.$el.html(template({
+            collection: this.annonces.toJSON(),
+            lastIndex: this.annonces.length - 1,  
+            config: config
+          }));
         }
      
     });

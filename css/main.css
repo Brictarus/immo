@@ -1,11 +1,42 @@
 @media (max-width: 767px) {
-  #main {
-    padding-top: 30px;
-  }
+  
 }
 
 @media screen and (min-width: 768px) {
-  #main {
-    padding-top: 48px;
-  }
+  
+}
+
+#main {
+    padding-top: 58px;
+}
+
+.annonces-list .thumbnail-annonce {
+  width: 200px;
+  position: relative;
+}
+
+.annonces-list .price {
+  font-weight: bold; 
+}
+
+.annonces-list .title, .annonce-detail .title {
+  font-size: 1.2em;
+  font-weight: bold; 
+}
+
+.thumbnail-annonce .pics-nb {
+  position: relative;
+  right: 20px;
+  display: inline-block;
+  vertical-align: bottom;
+  background-color: #D3D3D3;
+  width: 20px;
+  text-align: center; 
+  border: 1px solid gray;
+  border-radius: 50%;
+}
+
+.annonces-list .creation-date {
+  font-style: italic;
+  font-size: 0.9em;
 }
