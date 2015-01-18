@@ -39,11 +39,7 @@ require.config({
         'async': {
             exports: 'async'
         },
-        'lightbox': ["jquery"] /*{
-          deps: [
-              'jquery'
-            ]
-        }*/
+        'lightbox': ["jquery"]
     },
 
     // Libraries
@@ -55,7 +51,7 @@ require.config({
         lightbox: 'lib/lightbox',
         text: 'lib/text',
         i18n: 'lib/i18n',
-        'bootstrap': 'lib/bootstrap',
+        'bootstrap': 'lib/bootstrap.min',
         'handlebars-orig': 'lib/handlebars-v2.0.0',
         'handlebars': 'lib/handlebars-helpers',
         'backbone-queryparams': 'lib/backbone-queryparams',

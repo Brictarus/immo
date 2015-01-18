@@ -1,4 +1,4 @@
-define(['config', 'lightbox'], function(config) {
+define(['config', 'lightbox', 'bootstrap'], function(config) {
     
   var App = window.App = {};
   App.config = config;

@@ -21,10 +21,43 @@
     </div>
   </div>
 
-  <div class="container">
-    <div class="row title">{{model.label}}</div>
-    <div class="row">{{ifinline model.description model.description "Pas de description"}}</div>
+  <!--<div class="container">-->
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <div class="panel-title">{{model.label}}</div>
+    </div>
+    
+    {{ifinline model.description model.description "Pas de description"}}
   </div>
-
-
+  
+  <div class="panel panel-info comments">
+    <div class="panel-heading">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-target="#comment-list-group"> <!--class="collapsed"-->
+          Commentaires <span class="badge">5</span>
+        </a>
+      </h4>
+    </div>
+    <!--<h3>Commentaires</h3>-->
+    <div class="list-group panel-collapse collapse in" id="comment-list-group">
+      <div class="panel-body">
+        <div class="list-group-item">
+          <div class="media-body">Ceci est un premier commentaire.</div>
+          <div class="comment-date">Ajouté le 01/02/2015 à 16h35</div>
+        </div>
+        <div class="list-group-item">
+          <div class="media-body">Ceci est un premier commentaire. et un deuxieme</div>
+          <div class="comment-date">Ajouté le 01/02/2015 à 16h35</div>
+        </div>
+        <div class="list-group-item">
+          <div class="media-body">Ceci est un premier commentaire. et un deuxieme et un troisieme</div>
+          <div class="comment-date">Ajouté le 01/02/2015 à 16h35</div>
+        </div>
+        <div class="list-group-item">
+          <div class="media-body">Ceci est un premier commentaire. et un deuxieme et un troisieme et un quatrième</div>
+          <div class="comment-date">Ajouté le 01/02/2015 à 16h35</div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
