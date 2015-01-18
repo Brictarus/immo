@@ -9,9 +9,10 @@ define(['underscore', 'backbone',
         },
         
         render: function() {
-            this.annonce.fetch({
-                success: this.onAnnonceFetched
-            });
+          this.annonce.fetch({
+              success: this.onAnnonceFetched
+          });
+          return this;
         },
             
         onAnnonceFetched: function() {

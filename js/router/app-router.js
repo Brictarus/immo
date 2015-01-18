@@ -1,5 +1,5 @@
-define(['backbone', 'config', 'view/annonce-detail-view', 'view/annonces-view', 'backbone-queryparams'], 
-       function(Backbone, config, AnnonceDetailView, AnnoncesListView) {
+define(['backbone', 'config', 'view/annonce-detail-view', 'view/annonces-view', 'view/annonce-form-view', 'backbone-queryparams'], 
+       function(Backbone, config, AnnonceDetailView, AnnoncesListView, AnnonceFormView) {
     
     var AppRouter = Backbone.Router.extend({
         
@@ -11,19 +11,37 @@ define(['backbone', 'config', 'view/annonce-detail-view', 'view/annonces-view', 
         '': 'main',
         '/': 'main',
         'annonce/:id': 'detail',
+        'nouvelle-annonce': 'newAnnonce',
+        'nouvelle-annonce/leboncoin': 'newAnnonceBonCoin',
+        'nouvelle-annonce/seloger': 'newAnnonceSeLoger',
         '*notFound': 'notFound'
       },
 
       main: function() {
-          // Instanciation des vues
-          var annoncesListView = new AnnoncesListView({
-              el: "#main"
-          });
-          annoncesListView.render();
+        // Instanciation des vues
+        App.creationMenu.show();
+        var annoncesListView = new AnnoncesListView({
+            el: "#main"
+        });
+        annoncesListView.render();
       },
 
       detail: function(id) {
+        App.creationMenu.show();
         new AnnonceDetailView({el : '#main', annonceId: id}).render();
+      },
+      
+      newAnnonce: function() {
+        App.creationMenu.hide();
+        new AnnonceFormView({el : '#main'}).render();
+      },
+      
+      newAnnonceBonCoin: function() {
+        App.creationMenu.hide();
+      },
+      
+      newAnnonceSeLoger: function() {
+        App.creationMenu.hide();
       }
     });
     

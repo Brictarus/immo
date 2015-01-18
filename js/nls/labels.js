@@ -1,5 +1,7 @@
 define({
-  general: {
-    unknown: "-"
+  "root": {
+    "general": {
+      "unknown": "-"
+    }
   }
 });

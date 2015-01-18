@@ -26,8 +26,58 @@
     <div class="panel-heading">
       <div class="panel-title">{{model.label}}</div>
     </div>
-    
-    {{ifinline model.description model.description "Pas de description"}}
+    <div class="list-group panel-collapse collapse in" id="comment-list-group">
+      <div class="panel-body">
+        <dl class="dl-horizontal">
+          <dt>Type de logement</dt>
+          <dd>T3</dd>
+          
+          <dt>Adresse</dt>
+          <dd>Non duis occaecat incididunt non mentitum magna eiusmod quamquam.</dd>
+          
+          <dt>Description</dt>
+          <dd class="text-justify">Nostrud voluptatibus eu commodo. Est quis comprehenderit ne commodo 
+            despicationes an fabulas, legam qui id quis senserit nam varias occaecat ne 
+            familiaritatem e o noster laborum iudicem, nulla possumus senserit id aut noster 
+            te cillum, quis aliquip ad vidisse. Te aliqua eram quid tempor, malis 
+            consectetur occaecat anim incurreret, labore ita occaecat, varias appellat 
+            expetendis, quibusdam voluptatibus ex ingeniis ex an dolore voluptate quamquam 
+            se minim nescius te doctrina do tamen iis quibusdam. Ubi labore tractavissent 
+            aut singulis iis quibusdam si hic do eruditionem, litteris velit summis aut 
+            amet, ea esse domesticarum et litteris summis quis ad labore, incurreret ut 
+            officia, legam quamquam appellat. Pariatur illum iis admodum illustriora ne do 
+            elit quis enim incurreret. Et sunt despicationes. Ubi incurreret transferrem, 
+            ita aute commodo praetermissum. Fugiat a litteris in malis. Iis nam adipisicing 
+            ita quem a pariatur. Lorem laboris imitarentur, laborum do sunt aut quis 
+            illustriora officia aliqua litteris si malis singulis ex illustriora. Multos 
+            eruditionem nescius quorum doctrina, dolor probant se pariatur eu sunt senserit 
+            se concursionibus an sed dolore de ipsum. Tempor labore eiusmod, incurreret 
+            dolor laboris. Magna si nescius a hic te magna pariatur.</dd>
+          
+          <dt>Charges annuelles</dt>
+          <dd>2 000 €</dd>
+          
+          <dt>Charges</dt>
+          <dd><ul>
+            <li>Eau chaude</li>
+            <li>Eau froide</li>
+            <li>Chauffage</li>
+            <li>Gardien</li>
+          </ul></dd>
+          
+          <dt>Taxe d'habitation</dt>
+          <dd>1 500 €</dd>
+          
+          <dt>Taxe foncière</dt>
+          <dd>1 500 €</dd>
+          
+          <dt>Etage</dt>
+          <dd>2 / 5</dd>
+          
+          
+        </dl>
+      </div>
+    </div>
   </div>
   
   <div class="panel panel-info comments">
@@ -57,6 +107,7 @@
           <div class="media-body">Ceci est un premier commentaire. et un deuxieme et un troisieme et un quatrième</div>
           <div class="comment-date">Ajouté le 01/02/2015 à 16h35</div>
         </div>
+        <input type="button" class="btn btn-primary" value="Ajouter un commentaire" />
       </div>
     </div>
   </div>

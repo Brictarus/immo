@@ -1,0 +1,245 @@
+<form action="#" class="form-horizontal">
+  
+  {{! type de logement }}
+  <div class="form-group">
+    <label for="type-logement" class="col-sm-2 control-label">Type de logement</label>
+    <div class="col-sm-10">
+      <select name="type" id="type-logement" class="form-control">
+        <option value="">{{labels.general.unknown}}</option>
+        <option value="T2BIS">T2 bis</option>
+        <option value="T3">T3</option>
+        <option value="T3BIS">T3 bis</option>
+        <option value="T4">T4</option>
+        <option value="T4BIS">T4 bis</option>
+        <option value="T5">T5</option>
+        <option value="T5+">T5+</option>
+      </select>
+    </div>
+  </div>
+  
+  {{! Surface }}
+   <div class="form-group">
+    <label for="surface" class="col-sm-2 control-label">Surface</label>
+    <div class="col-sm-10">
+      <input type="number" class="form-control" id="surface" placeholder="en m²" value="{{model.surface}}">
+    </div>
+  </div>
+  
+  {{! Nb Chambres }}
+  <div class="form-group">
+    <label for="nb-chambres" class="col-sm-2 control-label">Nombre de chambres</label>
+    <div class="col-sm-10">
+      <select name="type" id="nb-etages" class="form-control">
+        <option value="">{{labels.general.unknown}}</option>
+        {{#for 1 5}}
+          <option value="{{this}}">{{this}}</option>
+        {{/for}}
+      </select>
+    </div>
+  </div>
+  
+  {{! Titre }}
+  <div class="form-group">
+    <label for="label" class="col-sm-2 control-label">Titre</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="label" placeholder="Titre" value="{{model.label}}">
+    </div>
+  </div>
+  
+  {{! Description }}
+  <div class="form-group">
+    <label for="description" class="col-sm-2 control-label">Description</label>
+    <div class="col-sm-10">
+      <textarea class="form-control" id="description" placeholder="Description" rows="3">{{model.description}}</textarea>
+    </div>
+  </div>
+  
+  {{! Prix }}
+  <div class="form-group">
+    <label for="prix" class="col-sm-2 control-label">Prix</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="prix" placeholder="Prix" value="{{model.price}}">
+    </div>
+  </div>
+  
+  {{! adresse }}
+  <div class="form-group">
+    <label for="adresse" class="col-sm-2 control-label">Adresse</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="adresse" placeholder="Adresse" value="{{model.adresse}}">
+    </div>
+  </div>
+  
+  {{! etage }}
+  <div class="form-group">
+    <label for="etage" class="col-sm-2 control-label">Etage</label>
+    <div class="col-sm-10">
+      <select name="type" id="etage" class="form-control">
+        <option value="">{{labels.general.unknown}}</option>
+        <option value="0">RDC / RDJ</option>
+        {{#for 1 10}}
+          <option value="{{this}}">{{this}}</option>
+        {{/for}}
+      </select>
+    </div>
+  </div>
+  
+  {{! nb etages }}
+  <div class="form-group">
+    <label for="nb-etages" class="col-sm-2 control-label">Nombre d'étage (immmeuble)</label>
+    <div class="col-sm-10">
+      <select name="type" id="nb-etages" class="form-control">
+        <option value="">{{labels.general.unknown}}</option>
+        {{#for 1 10}}
+          <option value="{{this}}">{{this}}</option>
+        {{/for}}
+      </select>
+    </div>
+  </div>
+  
+  {{! montant des charges }}
+   <div class="form-group">
+    <label for="montant-charges" class="col-sm-2 control-label">Montant des charges annuelles</label>
+    <div class="col-sm-10">
+      <input type="number" class="form-control" id="montant-charges" placeholder="Charges en euros" value="{{model.montant_charges}}">
+    </div>
+  </div>
+  
+  {{! detail des charges}}
+   <div class="form-group">
+    <label class="col-sm-2 control-label">Détail des charges</label>
+    <div class="col-sm-10">
+      <div class="btn-group" data-toggle="buttons">
+        <label class="btn btn-primary">
+          <input type="checkbox" autocomplete="off"> Entretien commun
+        </label>
+        <label class="btn btn-primary">
+          <input type="checkbox" autocomplete="off"> Eau froide
+        </label>
+        <label class="btn btn-primary">
+          <input type="checkbox" autocomplete="off"> Eau chaude
+        </label>
+        <label class="btn btn-primary">
+          <input type="checkbox" autocomplete="off"> Chauffage
+        </label>
+        <label class="btn btn-primary">
+          <input type="checkbox" autocomplete="off"> Gardien
+        </label>
+        
+      </div>
+    </div>
+  </div>
+  
+  {{! Taxe d'habitation }}
+   <div class="form-group">
+    <label for="taxe-habitation" class="col-sm-2 control-label">Taxe d'habitation</label>
+    <div class="col-sm-10">
+      <input type="number" class="form-control" id="taxe-habitation" placeholder="Montant en euros" value="{{model.taxe_habitation}}">
+    </div>
+  </div>
+  
+  {{! Taxe foncière }}
+   <div class="form-group">
+    <label for="taxe-fonciere" class="col-sm-2 control-label">Taxe foncière</label>
+    <div class="col-sm-10">
+      <input type="number" class="form-control" id="taxe-fonciere" placeholder="Montant en euros" value="{{model.taxe_fonciere}}">
+    </div>
+  </div>
+  
+  {{! Ascenceur}}
+   <div class="form-group">
+    <label class="col-sm-2 control-label">Ascenceur</label>
+    <div class="col-sm-10">
+      <div class="btn-group" data-toggle="buttons">
+        <label class="btn btn-primary">
+          <input type="radio" autocomplete="off"> Inconnu
+        </label>
+        <label class="btn btn-primary">
+          <input type="radio" autocomplete="off"> Oui
+        </label>
+        <label class="btn btn-primary">
+          <input type="radio" autocomplete="off"> Non
+        </label>
+      </div>
+    </div>
+  </div>
+  
+  {{! Cave}}
+  <div class="form-group">
+    <label class="col-sm-2 control-label">Cave</label>
+    <div class="col-sm-10">
+      <div class="btn-group" data-toggle="buttons">
+        <label class="btn btn-primary">
+          <input type="radio" autocomplete="off"> Inconnu
+        </label>
+        <label class="btn btn-primary">
+          <input type="radio" autocomplete="off"> Oui
+        </label>
+        <label class="btn btn-primary">
+          <input type="radio" autocomplete="off"> Non
+        </label>
+      </div>
+    </div>
+  </div>
+  
+  {{! Cuisine ouverte}}
+  <div class="form-group">
+    <label class="col-sm-2 control-label">Cuisine ouverte</label>
+    <div class="col-sm-10">
+      <div class="btn-group" data-toggle="buttons">
+        <label class="btn btn-primary">
+          <input type="radio" autocomplete="off"> Inconnu
+        </label>
+        <label class="btn btn-primary">
+          <input type="radio" autocomplete="off"> Oui
+        </label>
+        <label class="btn btn-primary disabled">
+          <input type="radio" autocomplete="off" disabled> Possible
+        </label>
+        <label class="btn btn-primary">
+          <input type="radio" autocomplete="off"> Non
+        </label>
+      </div>
+    </div>
+  </div>
+  
+  {{! Stationnement}}
+  <div class="form-group">
+    <label class="col-sm-2 control-label">Stationnement</label>
+    <div class="col-sm-10">
+      <div class="btn-group" data-toggle="buttons">
+        <label class="btn btn-primary">
+          <input type="radio" autocomplete="off"> Inconnu
+        </label>
+        <label class="btn btn-primary">
+          <input type="radio" autocomplete="off"> Oui
+        </label>
+        <label class="btn btn-primary">
+          <input type="radio" autocomplete="off"> Non
+        </label>
+      </div>
+    </div>
+  </div>
+  
+  {{! Type de stationnement }}
+  <div class="form-group">
+    <label class="col-sm-2 control-label">Type de stationnement</label>
+    <div class="col-sm-10">
+      <div class="btn-group" data-toggle="buttons">
+        <label class="btn btn-primary">
+          <input type="radio" autocomplete="off"> Place en extérieur
+        </label>
+        <label class="btn btn-primary">
+          <input type="radio" autocomplete="off"> Place en s-s
+        </label>
+        <label class="btn btn-primary">
+          <input type="radio" autocomplete="off"> Box en extérieur
+        </label>
+        <label class="btn btn-primary">
+          <input type="radio" autocomplete="off"> Box en s-s
+        </label>
+      </div>
+    </div>
+  </div>
+  
+</form>

@@ -74,3 +74,7 @@
 .comments .panel-title a.collapsed:after {
   content:"\e080";
 }
+
+.new-annonces-btn-group {
+  margin-top: 8px;
+}

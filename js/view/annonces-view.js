@@ -12,6 +12,7 @@ define(['underscore', 'backbone',
           this.annonces.fetch({
               success: this.onAnnoncesFetched
           });
+          return this;
         },
             
         onAnnoncesFetched: function() {
