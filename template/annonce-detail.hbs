@@ -1,14 +1,30 @@
 <div class="annonce-detail">
   <div class="jumbotron">
-      <div class="container">
-        <h1>Hello, world!</h1>
-        <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
-        <p><a class="btn btn-primary btn-lg" href="test" role="button">Learn more »</a></p>
+    <div class="container">
+      <!--<h1>Hello, world!</h1>
+      <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
+      <p><a class="btn btn-primary btn-lg" href="test" role="button">Learn more »</a></p>-->
+      <div class="pics-container">
+        <a href="data/pics/pic1.jpg" data-title="My caption" data-lightbox="roadtrip"><img src="data/thumbnails/thumb0.jpg" /></a>
+        <a href="data/pics/pic2.jpg" data-title="My caption 2" data-lightbox="roadtrip"><img src="data/thumbnails/thumb1.jpg" /></a>
+        <a href="data/pics/pic3.jpg" data-title="My caption 2" data-lightbox="roadtrip"><img src="data/thumbnails/thumb2.jpg" /></a>
+        <img src="data/thumbnails/cb2c87e2a870ea653f3672d74b2ee5878943bd82.jpg" />
+        <img src="data/thumbnails/thumb0.jpg" />
+        <img src="data/thumbnails/thumb1.jpg" />
+        <img src="data/thumbnails/thumb2.jpg" />
+        <img src="data/thumbnails/cb2c87e2a870ea653f3672d74b2ee5878943bd82.jpg" />
+        <img src="data/thumbnails/thumb0.jpg" />
+        <img src="data/thumbnails/thumb1.jpg" />
+        <img src="data/thumbnails/thumb2.jpg" />
       </div>
+      <div class="text-center pics-nb">12 photos disponibles</div>
+    </div>
   </div>
 
   <div class="container">
     <div class="row title">{{model.label}}</div>
     <div class="row">{{ifinline model.description model.description "Pas de description"}}</div>
   </div>
+
+
 </div>

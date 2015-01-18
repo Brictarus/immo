@@ -38,7 +38,12 @@ require.config({
         },
         'async': {
             exports: 'async'
-        }
+        },
+        'lightbox': ["jquery"] /*{
+          deps: [
+              'jquery'
+            ]
+        }*/
     },
 
     // Libraries
@@ -47,7 +52,7 @@ require.config({
         underscore: 'lib/underscore',
         'underscore.string': 'lib/underscore.string',
         backbone: 'lib/backbone',
-        
+        lightbox: 'lib/lightbox',
         text: 'lib/text',
         i18n: 'lib/i18n',
         'bootstrap': 'lib/bootstrap',

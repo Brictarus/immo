@@ -24,7 +24,7 @@
   font-weight: bold; 
 }
 
-.thumbnail-annonce .pics-nb {
+.annonces-list .thumbnail-annonce .pics-nb {
   position: relative;
   right: 20px;
   display: inline-block;
@@ -39,4 +39,21 @@
 .annonces-list .creation-date {
   font-style: italic;
   font-size: 0.9em;
+}
+
+.pics-container {
+  overflow: auto;
+  white-space: nowrap;
+}
+
+.pics-container img {
+  display: inline-block:
+}
+
+
+/* Detail page */
+.annonce-detail .pics-nb {
+  font-size: 0.9em;
+  font-weight: bold;
+  color: #999;
 }
