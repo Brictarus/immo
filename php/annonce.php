@@ -1,4 +1,7 @@
 <?php
+require 'jsonwrapper/jsonwrapper.php';
+
+header('Access-Control-Allow-Origin: *');
 error_reporting(E_ALL & ~E_DEPRECATED & ~E_NOTICE);
 switch($_SERVER['REQUEST_METHOD']){
     case 'POST':

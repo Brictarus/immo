@@ -1,3 +1,5 @@
+<?php header("Access-Control-Allow-Origin: *"); ?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -6,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon"       type="image/jpeg" href="./favicon.png">
     <title>Immo</title>
-    <base href="http://localhost/ble-immo/" />
+    <base href="http://<?php echo $_SERVER['SERVER_NAME']; ?>/ble-immo/" />
 
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -51,7 +53,7 @@
     <div id="main" class="container"></div>
     <footer class="container">
       <hr>
-      <p>© Brice Lepeigneul &amp; Angélique Hilaire 2015</p>
+      <p>© 2015 - Brictarus</p>
       </footer>
   </body>
 </html>
