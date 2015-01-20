@@ -46,18 +46,26 @@ class GenericController {
     $acceptHeader = $_SERVER['HTTP_ACCEPT'];
     $func = 'sendDataAsJson';
     if ($acceptHeader != null) {
-      switch ($acceptHeader) {
+      // ne fonctionne pas car ca peut etre une liste...
+      /*switch ($acceptHeader) {
         case "text/xml":
           $func = 'sendDataAsXml';
           break;
         case "application/json":
-        case "*/*":
+        case "*\/*":
         case "*":
           $func = 'sendDataAsJson';
           break;
         default:
           $func = 'sendUnsupportedMediaTypeHeader';
           break;
+      }*/
+      if (strrpos($acceptHeader, "application/json") !== false) {
+        $func = 'sendDataAsJson';
+      } else if (strrpos($acceptHeader, "text/xml") !== false) {
+        $func = 'sendDataAsXml';
+      } else {
+        $func = 'sendUnsupportedMediaTypeHeader';
       }
     }
     $this->$func($data);
