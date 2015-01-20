@@ -1,14 +1,12 @@
 <?php
 
 include_once 'mysql.php';
-//include_once '../factory/factory.php';
 
 class GenericDao {
   
   protected $daoConnector = null;
-  //protected $entityFactory = null;
   
-  function __construct($tableName /*, Factory $entityFactory*/) {
+  function __construct($tableName) {
     if ($tableName == null) {
       throw new Exception('tableName ne doit pas être null');  
     }

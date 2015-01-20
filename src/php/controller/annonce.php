@@ -1,110 +1,68 @@
 <?php
 require '../jsonwrapper/jsonwrapper.php';
+include_once '../dao/annonce-dao.php';
+include_once 'generic-controller.php';
 
-header('Access-Control-Allow-Origin: *');
-error_reporting(E_ALL & ~E_DEPRECATED & ~E_NOTICE);
-switch($_SERVER['REQUEST_METHOD']) {
-  case 'POST':
-    save();
-    break;
-
-  case 'GET':
-    if (isset($_GET['id'])) {
-      findOne($_GET['id']);
-    }
-    else {
-      findAll();
-    }
-    break;
-
-  case 'PUT':
-    update();
-    break;
-
-  case 'DELETE':
-    delete();
-    break;
-
-  default:
-    echo "erreur dans la méthode requise par le seveur";
-    break;
-}
-
-function findAll() {
-    // Connexion à la base de données
-    $dbhost = 'localhost';
-    $dbuser = 'root';
-    $dbpass = '';
-    $dbname = 'immo';
-    
-    $conn = mysql_connect($dbhost, $dbuser, $dbpass);
-    if(!$conn) {
-      die('Could not connect: ' . mysql_error());
-    }
-    
-    // La requête à effectuer
-    $sql = 'SELECT * FROM annonce';
-    mysql_select_db($dbname);
-    
-    // Execution de la requête
-    $retval = mysql_query( $sql, $conn );
-    if(! $retval )
-    {
-      die('Could not get data: ' . mysql_error());
-    }
-    
-    // récupération des resultats
-    $tempArr = array();
-    while($row = mysql_fetch_array($retval, MYSQL_ASSOC))
-    {
-        array_push($tempArr, $row);
-    }
-    
-    // affichage du resultat en json
-    echo json_encode($tempArr);
-    
-    mysql_close($conn);
-}
-
-function findOne($id) {
-    // Connexion à la base de données
-    $dbhost = 'localhost';
-    $dbuser = 'root';
-    $dbpass = '';
-    $dbname = 'immo';
-    
-    if ($id == null) {
-      header('HTTP/1.0 400 Bad Request');
-      return;
-    }
+class AnnonceController extends GenericController {
+  private $annonceDao = null;
   
-    $conn = mysql_connect($dbhost, $dbuser, $dbpass);
-    if(! $conn )
-    {
-      die('Could not connect: ' . mysql_error());
+  function __construct() {
+    $this->annonceDao = new AnnonceDao();
+  }
+  
+  function handleRequest() {
+    header('Access-Control-Allow-Origin: *');
+    switch($_SERVER['REQUEST_METHOD']) {
+      case 'POST':
+        $this->create();
+        break;
+
+      case 'GET':
+        if (isset($_GET['id'])) {
+          $this->findOne($_GET['id']);
+        }
+        else {
+          $this->findAll();
+        }
+        break;
+
+      case 'PUT':
+        $this->update($_GET['id']);
+        break;
+
+      case 'DELETE':
+        $this->delete($_GET['id']);
+        break;
+
+      default:
+        header('HTTP/1.1 405 Method Not Allowed');
+        break;
     }
-    
-    // La requête à effectuer
-    $sql = 'SELECT * FROM annonce WHERE id='.$id;
-    mysql_select_db($dbname);
-    
-    // Execution de la requête
-    $retval = mysql_query( $sql, $conn );
-    if(! $retval )
-    {
-      die('Could not get data: ' . mysql_error());
-    }
-    
-    // récupération des resultats
-    if($row = mysql_fetch_array($retval, MYSQL_ASSOC)) {
-        // affichage du resultat en json
-      echo json_encode($row);
+  }
+  
+  function findAll() {
+    $this->annonceDao->connect();
+    $res = $this->annonceDao->findAll(null);
+    $this->annonceDao->disconnect();
+    $this->sendReponse($res);
+  }
+
+  function findOne($id) {
+    $this->annonceDao->connect();
+    $res = $this->annonceDao->findOne($id, null);
+    $this->annonceDao->disconnect();
+    if($res != null) {
+      $this->sendReponse($res);
     } else {
-      header('HTTP/1.0 404 Not Found');
+      header('HTTP/1.1 404 Not Found');
     }
-    
-    mysql_close($conn);
+  }
 }
 
+
+
+error_reporting(E_ALL & ~E_DEPRECATED & ~E_NOTICE);
+(new AnnonceController())->handleRequest();
 error_reporting(E_ALL);
+
 ?>
