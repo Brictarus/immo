@@ -1,36 +1,36 @@
 <?php
-require 'jsonwrapper/jsonwrapper.php';
+require '../jsonwrapper/jsonwrapper.php';
 
 header('Access-Control-Allow-Origin: *');
 error_reporting(E_ALL & ~E_DEPRECATED & ~E_NOTICE);
-switch($_SERVER['REQUEST_METHOD']){
-    case 'POST':
-        save();
+switch($_SERVER['REQUEST_METHOD']) {
+  case 'POST':
+    save();
     break;
- 
-    case 'GET':
-      if (isset($_GET['id'])) {
-        findOne($_GET['id']);
-      }
-      else {
-        fetch();
-      }
+
+  case 'GET':
+    if (isset($_GET['id'])) {
+      findOne($_GET['id']);
+    }
+    else {
+      findAll();
+    }
     break;
- 
-    case 'PUT':
-        update();
+
+  case 'PUT':
+    update();
     break;
- 
-    case 'DELETE':
-        delete();
+
+  case 'DELETE':
+    delete();
     break;
- 
-    default:
-        echo "erreur dans la méthode requise par le seveur";
+
+  default:
+    echo "erreur dans la méthode requise par le seveur";
     break;
 }
 
-function fetch() {
+function findAll() {
     // Connexion à la base de données
     $dbhost = 'localhost';
     $dbuser = 'root';
@@ -38,8 +38,7 @@ function fetch() {
     $dbname = 'immo';
     
     $conn = mysql_connect($dbhost, $dbuser, $dbpass);
-    if(! $conn )
-    {
+    if(!$conn) {
       die('Could not connect: ' . mysql_error());
     }
     

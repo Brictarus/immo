@@ -1,6 +1,6 @@
 define({
   "urlRoot": "/ble-immo",
   "services" : {
-    annonce: "./php/annonce.php"
+    annonce: "./php/controller/annonce.php"
   }
 })
