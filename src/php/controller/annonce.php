@@ -62,7 +62,8 @@ class AnnonceController extends GenericController {
 
 
 error_reporting(E_ALL & ~E_DEPRECATED & ~E_NOTICE);
-(new AnnonceController())->handleRequest();
+$controller = new AnnonceController();
+$controller->handleRequest();
 error_reporting(E_ALL);
 
 ?>
