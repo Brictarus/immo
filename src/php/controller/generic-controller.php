@@ -46,7 +46,7 @@ class GenericController {
     $acceptHeader = $_SERVER['HTTP_ACCEPT'];
     $func = 'sendDataAsJson';
     if ($acceptHeader != null) {
-      // ne fonctionne pas car ca peut etre une liste...
+      // ne fonctionne pas car ca peut etre une liste....
       /*switch ($acceptHeader) {
         case "text/xml":
           $func = 'sendDataAsXml';
