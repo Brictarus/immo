@@ -1,4 +1,7 @@
 <?php
+
+require_once '../jsonwrapper/jsonwrapper.php';
+
 class GenericController {
   function xml_encode($mixed, $domElement = NULL, $DOMDocument = NULL) {
     if (is_null($DOMDocument)) {

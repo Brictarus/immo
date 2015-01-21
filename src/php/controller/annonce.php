@@ -1,5 +1,5 @@
 <?php
-require '../jsonwrapper/jsonwrapper.php';
+
 include_once '../dao/annonce-dao.php';
 include_once 'generic-controller.php';
 

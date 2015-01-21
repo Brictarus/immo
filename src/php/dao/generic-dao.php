@@ -80,7 +80,7 @@ class GenericDao {
     return $tempArr;
   }
   
-  function create() {
+  function create($data) {
     return null;
   }
   
@@ -93,7 +93,14 @@ class GenericDao {
   }
   
   function deleteAll() {
+    // construction de la requête
+    $sql = 'DELETE FROM '.$this->tableName;
     
+    // Execution de la requête
+    $retval = $this->daoConnector->query($sql, $this->daoConnector->sqlConnection);
+    if(!$retval) {
+      throw new Exception('Impossible de récupérer les données lors de l\'éxécution de la requête : ' . mysql_error());
+    }
   }
 }
 
