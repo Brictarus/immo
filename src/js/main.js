@@ -39,12 +39,14 @@ require.config({
         'async': {
             exports: 'async'
         },
-        'lightbox': ["jquery"]
+        'lightbox': ["jquery"],
+        'jquery.form': ["jquery"]
     },
 
     // Libraries
     paths: {
         jquery: 'lib/jquery-1.11.2.min',
+        'jquery.form': 'lib/jquery.form',
         underscore: 'lib/underscore',
         'underscore.string': 'lib/underscore.string',
         backbone: 'lib/backbone',

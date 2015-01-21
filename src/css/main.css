@@ -78,3 +78,7 @@
 .new-annonces-btn-group {
   margin-top: 8px;
 }
+
+.image-list .progress {
+  margin-bottom: 0px;
+}
