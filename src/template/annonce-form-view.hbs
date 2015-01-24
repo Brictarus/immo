@@ -16,13 +16,6 @@
     <div class="col-sm-10">
       <select name="type_logement" id="type-logement" name="type_logement" class="form-control">
         <option value="">{{labels.general.unknown}}</option>
-        <!--<option value="T2BIS">T2 bis</option>
-        <option value="T3">T3</option>
-        <option value="T3BIS">T3 bis</option>
-        <option value="T4">T4</option>
-        <option value="T4BIS">T4 bis</option>
-        <option value="T5">T5</option>
-        <option value="T5+">T5+</option>-->
         {{#each typesLogements}}
             <option value="{{this}}" {{ifequalsinline ../model.type_logement this "selected"}}>{{this}}</option>
         {{/each}}
@@ -45,7 +38,7 @@
       <select name="type" id="nb-chambres" name="nb_chambres" class="form-control">
         <option value="">{{labels.general.unknown}}</option>
         {{#for 1 5}}
-          <option value="{{this}}">{{this}}</option>
+          <option value="{{this}}" {{ifequalsinline ../model.nb_chambres this "selected"}}>{{this}}</option>
         {{/for}}
       </select>
     </div>
@@ -63,7 +56,7 @@
   <div class="form-group">
     <label for="prix" class="col-sm-2 control-label">Prix</label>
     <div class="col-sm-10">
-      <input type="number" min="0" max="400000" class="form-control" id="prix" name="prix" placeholder="Prix" value="{{model.price}}">
+      <input type="number" min="0" max="400000" class="form-control" id="prix" name="prix" placeholder="Prix" value="{{model.prix}}">
     </div>
   </div>
   
@@ -83,7 +76,7 @@
         <option value="">{{labels.general.unknown}}</option>
         <option value="0">RDC / RDJ</option>
         {{#for 1 10}}
-          <option value="{{this}}">{{this}}</option>
+          <option value="{{this}}" {{ifequalsinline ../model.etage this "selected"}}>{{this}}</option>
         {{/for}}
       </select>
     </div>
@@ -96,7 +89,7 @@
       <select name="type" id="nb-etages" name="nb_etages" class="form-control">
         <option value="">{{labels.general.unknown}}</option>
         {{#for 1 10}}
-          <option value="{{this}}">{{this}}</option>
+          <option value="{{this}}" {{ifequalsinline ../model.nb_etages this "selected"}}>{{this}}</option>
         {{/for}}
       </select>
     </div>
@@ -116,22 +109,21 @@
     <label class="col-sm-2 control-label">Détail des charges</label>
     <div class="col-sm-10">
       <div class="btn-group" data-toggle="buttons">
-        <label class="btn btn-default">
-          <input type="checkbox" autocomplete="off" id="ch-entretien-commun" > Entretien commun
+        <label class="btn btn-default {{ifequalsinline model.ch_entretien_commun true "active"}}">
+          <input type="checkbox" autocomplete="off" id="ch-entretien-commun" {{ifequalsinline model.ch_entretien_commun true "checked"}}> Entretien commun
         </label>
-        <label class="btn btn-default">
-          <input type="checkbox" autocomplete="off" id="ch-eau-froide"> Eau froide
+        <label class="btn btn-default {{ifequalsinline model.ch_eau_froide true "active"}}">
+          <input type="checkbox" autocomplete="off" id="ch-eau-froide" {{ifequalsinline model.ch_eau_froide true "checked"}}> Eau froide
         </label>
-        <label class="btn btn-default">
-          <input type="checkbox" autocomplete="off" id="ch-eau-chaude"> Eau chaude
+        <label class="btn btn-default {{ifequalsinline model.ch_eau_chaude true "active"}}">
+          <input type="checkbox" autocomplete="off" id="ch-eau-chaude" {{ifequalsinline model.ch_eau_chaude true "checked"}}> Eau chaude
         </label>
-        <label class="btn btn-default">
-          <input type="checkbox" autocomplete="off" id="ch-chauffage"> Chauffage
+        <label class="btn btn-default" {{ifequalsinline model.ch_chauffage true "active"}}>
+          <input type="checkbox" autocomplete="off" id="ch-chauffage" {{ifequalsinline model.ch_chauffage true "checked"}}> Chauffage
         </label>
-        <label class="btn btn-default">
-          <input type="checkbox" autocomplete="off" id="ch-gardien"> Gardien
+        <label class="btn btn-default {{ifequalsinline model.ch_gardien true "active"}}">
+          <input type="checkbox" autocomplete="off" id="ch-gardien" {{ifequalsinline model.ch_gardien true "checked"}}> Gardien
         </label>
-        
       </div>
     </div>
   </div>
@@ -157,14 +149,14 @@
     <label class="col-sm-2 control-label">Ascenceur</label>
     <div class="col-sm-10">
       <div class="btn-group" data-toggle="buttons">
-        <label class="btn btn-default">
-          <input type="radio" name="ascenceur" autocomplete="off" value=""> Inconnu
+        <label class="btn btn-default {{#ifnull model.ascenceur}}active{{/ifnull}}">
+          <input type="radio" name="ascenceur" autocomplete="off" value="" {{#ifnull model.ascenceur}}active{{/ifnull}}> Inconnu
         </label>
-        <label class="btn btn-default">
-          <input type="radio" name="ascenceur" autocomplete="off" value="true"> Oui
+        <label class="btn btn-default {{ifequalsinline model.ascenceur true "active"}}">
+          <input type="radio" name="ascenceur" autocomplete="off" value="true"  {{ifequalsinline model.ascenceur true "checked"}}> Oui
         </label>
-        <label class="btn btn-default">
-          <input type="radio" name="ascenceur" autocomplete="off" value="false"> Non
+        <label class="btn btn-default {{ifequalsinline model.ascenceur false "active"}}">
+          <input type="radio" name="ascenceur" autocomplete="off" value="false" {{ifequalsinline model.ascenceur false "checked"}}> Non
         </label>
       </div>
     </div>
@@ -175,14 +167,14 @@
     <label class="col-sm-2 control-label">Cave</label>
     <div class="col-sm-10">
       <div class="btn-group" data-toggle="buttons">
-        <label class="btn btn-default">
-          <input type="radio" autocomplete="off" name="cave" value=""> Inconnu
+        <label class="btn btn-default {{#ifnull model.cave}}active{{/ifnull}}">
+          <input type="radio" autocomplete="off" name="cave" value="" {{#ifnull model.cave}}checked{{/ifnull}}> Inconnu
         </label>
-        <label class="btn btn-default">
-          <input type="radio" autocomplete="off" name="cave" value="true"> Oui
+        <label class="btn btn-default {{ifequalsinline model.cave true "active"}}">
+          <input type="radio" autocomplete="off" name="cave" value="true" {{ifequalsinline model.cave true "checked"}}> Oui
         </label>
-        <label class="btn btn-default">
-          <input type="radio" autocomplete="off" name="cave" value="false"> Non
+        <label class="btn btn-default {{ifequalsinline model.cave false "active"}}">
+          <input type="radio" autocomplete="off" name="cave" value="false" {{ifequalsinline model.cave false "checked"}}> Non
         </label>
       </div>
     </div>
@@ -193,17 +185,17 @@
     <label class="col-sm-2 control-label">Cuisine ouverte</label>
     <div class="col-sm-10">
       <div class="btn-group" data-toggle="buttons">
-        <label class="btn btn-default">
-          <input type="radio" autocomplete="off" name="cuisine-ouverte" value=""> Inconnu
+        <label class="btn btn-default {{#ifnull model.cuisine_ouverte}}active{{/ifnull}}">
+          <input type="radio" autocomplete="off" name="cuisine-ouverte" value="" {{#ifnull model.cuisine_ouverte}}checked{{/ifnull}}> Inconnu
         </label>
-        <label class="btn btn-default">
-          <input type="radio" autocomplete="off" name="cuisine-ouverte" value="true"> Oui
+        <label class="btn btn-default {{ifequalsinline model.cuisine_ouverte true "active"}}">
+          <input type="radio" autocomplete="off" name="cuisine-ouverte" value="true" {{ifequalsinline model.cuisine_ouverte true "checked"}}> Oui
         </label>
         <label class="btn btn-default disabled">
           <input type="radio" autocomplete="off"  name="cuisine-ouverte" value="MAYBE" disabled> Possible
         </label>
-        <label class="btn btn-default">
-          <input type="radio" autocomplete="off" name="cuisine-ouverte" value="false"> Non
+        <label class="btn btn-default {{ifequalsinline model.cuisine_ouverte false "active"}}">
+          <input type="radio" autocomplete="off" name="cuisine-ouverte" value="false" {{ifequalsinline model.cuisine_ouverte false "checked"}}> Non
         </label>
       </div>
     </div>
@@ -214,14 +206,14 @@
     <label class="col-sm-2 control-label">Stationnement</label>
     <div class="col-sm-10">
       <div class="btn-group" data-toggle="buttons">
-        <label class="btn btn-default">
-          <input type="radio" autocomplete="off" name="stationnement" value=""> Inconnu
+        <label class="btn btn-default {{#ifnull model.stationnement}}active{{/ifnull}}">
+          <input type="radio" autocomplete="off" name="stationnement" value="" {{#ifnull model.stationnement}}active{{/ifnull}}> Inconnu
         </label>
-        <label class="btn btn-default">
-          <input type="radio" autocomplete="off" name="stationnement" value="true"> Oui
+        <label class="btn btn-default {{ifequalsinline model.stationnement true "active"}}">
+          <input type="radio" autocomplete="off" name="stationnement" value="true" {{ifequalsinline model.stationnement true "checked"}}> Oui
         </label>
-        <label class="btn btn-default">
-          <input type="radio" autocomplete="off" name="stationnement" value="false"> Non
+        <label class="btn btn-default {{ifequalsinline model.stationnement false "active"}}">
+          <input type="radio" autocomplete="off" name="stationnement" value="false" {{ifequalsinline model.stationnement false "checked"}}> Non
         </label>
       </div>
     </div>
@@ -232,17 +224,17 @@
     <label class="col-sm-2 control-label">Type de stationnement</label>
     <div class="col-sm-10">
       <div class="btn-group" data-toggle="buttons">
-        <label class="btn btn-default">
-          <input type="radio" autocomplete="off" name="type-stationnement" value="SPOT_OUT"> Place en extérieur
+        <label class="btn btn-default {{ifequalsinline model.type_stationnement "SPOT_OUT" "active"}}">
+          <input type="radio" autocomplete="off" name="type-stationnement" value="SPOT_OUT" {{ifequalsinline model.type_stationnement "SPOT_OUT" "active"}}> Place en extérieur
         </label>
-        <label class="btn btn-default">
-          <input type="radio" autocomplete="off" name="type-stationnement" value="SPOT_IN"> Place en s-s
+        <label class="btn btn-default {{ifequalsinline model.type_stationnement "SPOT_IN" "active"}}">
+          <input type="radio" autocomplete="off" name="type-stationnement" value="SPOT_IN" {{ifequalsinline model.type_stationnement "SPOT_IN" "active"}}> Place en s-s
         </label>
-        <label class="btn btn-default">
-          <input type="radio" autocomplete="off"  name="type-stationnement" value="BOX_IN"> Box en extérieur
+        <label class="btn btn-default {{ifequalsinline model.type_stationnement "BOX_OUT" "active"}}">
+          <input type="radio" autocomplete="off" name="type-stationnement" value="BOX_OUT" {{ifequalsinline model.type_stationnement "BOX_OUT" "active"}}> Box en s-s
         </label>
-        <label class="btn btn-default">
-          <input type="radio" autocomplete="off" name="type-stationnement" value="BOX_OUT"> Box en s-s
+        <label class="btn btn-default {{ifequalsinline model.type_stationnement "BOX_IN" "active"}}">
+          <input type="radio" autocomplete="off"  name="type-stationnement" value="BOX_IN" {{ifequalsinline model.type_stationnement "BOX_IN" "active"}}> Box en extérieur
         </label>
       </div>
     </div>

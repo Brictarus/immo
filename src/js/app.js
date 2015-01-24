@@ -8,6 +8,7 @@ define(['config',
 
   require(['router/app-router', 'view/new-annonce-menu'],
       function (AppRouter, AnnonceCreationMenu) {
+        $.ajaxSetup({ cache: false });
         App.creationMenu = new AnnonceCreationMenu({el: "#new-annonce-menu"});
         App.router = new AppRouter();
         App.creationMenu.render();

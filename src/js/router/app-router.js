@@ -1,5 +1,5 @@
-define(['backbone', 'config', 'view/annonce-detail-view', 'view/annonces-view', 'view/annonce-form-view', 'backbone-queryparams'], 
-       function(Backbone, config, AnnonceDetailView, AnnoncesListView, AnnonceFormView) {
+define(['backbone', 'config', 'model/annonce', 'view/annonce-detail-view', 'view/annonces-view', 'view/annonce-form-view', 'backbone-queryparams'],
+       function(Backbone, config, Annonce, AnnonceDetailView, AnnoncesListView, AnnonceFormView) {
     
     var AppRouter = Backbone.Router.extend({
         
@@ -11,6 +11,7 @@ define(['backbone', 'config', 'view/annonce-detail-view', 'view/annonces-view', 
         '': 'main',
         '/': 'main',
         'annonce/:id': 'detail',
+        'annonce/:id/modifier': 'updateAnnonce',
         'nouvelle-annonce': 'newAnnonce',
         'nouvelle-annonce/leboncoin': 'newAnnonceBonCoin',
         'nouvelle-annonce/seloger': 'newAnnonceSeLoger',
@@ -29,6 +30,16 @@ define(['backbone', 'config', 'view/annonce-detail-view', 'view/annonces-view', 
       detail: function(id) {
         App.creationMenu.show();
         new AnnonceDetailView({el : '#main', annonceId: id}).render();
+      },
+
+      updateAnnonce: function(id) {
+        App.creationMenu.hide();
+        var annonce = new Annonce({id: id});
+        annonce.fetch({
+          success: function() {
+            new AnnonceFormView({el : '#main', model: annonce}).render();
+          }
+        });
       },
       
       newAnnonce: function() {

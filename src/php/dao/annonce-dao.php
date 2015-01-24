@@ -11,13 +11,14 @@ class AnnonceDao extends GenericDao
       "adresse" => "string",
       "ascenceur" => "boolean",
       "cave" => "boolean",
+      "prix" => "integer",
       "ch_chauffage" => "boolean",
       "ch_eau_chaude" => "boolean",
       "ch_eau_froide" => "boolean",
       "ch_entretien_commun" => "boolean",
       "ch_gardien" => "boolean",
       "cuisine_ouverte" => "boolean",
-      "date_creation" => "custom",
+      "date_creation" => "date",
       "description" => "string",
       "etage" => "integer",
       "label" => "string",
@@ -39,6 +40,7 @@ class AnnonceDao extends GenericDao
       "adresse" => $data->adresse,
       "ascenceur" => $data->ascenceur,
       "cave" => $data->cave,
+      "prix" => $data->prix,
       "ch_chauffage" => $data->ch_chauffage,
       "ch_eau_chaude" => $data->ch_eau_chaude,
       "ch_eau_froide" => $data->ch_eau_froide,
@@ -59,6 +61,28 @@ class AnnonceDao extends GenericDao
       "type_logement" => $data->type_logement,
       "type_stationnement" => $data->type_stationnement
     );
+  }
+
+  function findOne($id, $fields, $idField = "id")
+  {
+    $res = parent::findOne($id, $fields, $idField);
+    if ($res != null) {
+      foreach($res as $key => $value) {
+        $type = $this->entityFields[$key];
+        if ($value != null && $type != null) {
+            switch($type) {
+              case "integer":
+              case "boolean":
+                settype($value, $type);
+                $res[$key] = $value;
+                break;
+              default:
+                break;
+            }
+        }
+      }
+    }
+    return $res;
   }
 
   function create($data)

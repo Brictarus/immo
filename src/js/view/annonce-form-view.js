@@ -16,15 +16,19 @@ define(['underscore',
         typesLogements: ["T2BIS", "T3", "T3BIS", "T4", "T4BIS", "T5", "T5+"],
 
         initialize: function (options) {
-          this.model = options.model || new Annonce({
-            type_logement: "T3",
-            surface: 70,
-            label: "Mon annonce " + Date.now()
-          });
-          Backbone.Validation.bind(this, {
-            valid: _.bind(this.valid, this),
-            invalid: _.bind(this.invalid, this)
-          });
+          if (options.model) {
+            this.model = options.model;
+          } else {
+            this.model = new Annonce({
+              type_logement: "T3",
+              surface: 70,
+              label: "Mon annonce " + Date.now()
+            });
+            Backbone.Validation.bind(this, {
+              valid: _.bind(this.valid, this),
+              invalid: _.bind(this.invalid, this)
+            });
+          }
         },
 
         render: function () {

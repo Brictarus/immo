@@ -191,6 +191,24 @@ define(['handlebars-orig', 'moment', 'underscore-string'], function(Handlebars, 
         }
         return momentDate.format(outputPattern);
     });
+
+    /**
+     * This helper provides null comparison support
+     *
+     * val is the value to test
+     * The block is rendered ifval is null
+     * else block (if provided) is rendered instead
+     *
+     * Usage: class='{{#ifNull toto}} toto is null {{else}} toto is not null {{/ifNull}}'
+     */
+    Handlebars.registerHelper('ifnull', function(val, block) {
+        if(val == null) {
+            return block.fn();
+        }
+        else {
+            return block.inverse();
+        }
+    });
    
     return Handlebars;
 
