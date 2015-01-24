@@ -1,12 +1,12 @@
 <div id="add-image-container"></div>
 
-<form action="#" class="form-horizontal">
+<form action="#" class="form-horizontal" id="annonce-form">
   
   {{! type de logement }}
   <div class="form-group">
-    <label for="type-logement" class="col-sm-2 control-label">Type de logement</label>
+    <label for="type-logement" class="col-sm-2 control-label required">Type de logement</label>
     <div class="col-sm-10">
-      <select name="type" id="type-logement" class="form-control">
+      <select name="type_logement" id="type-logement" name="type_logement" class="form-control">
         <option value="">{{labels.general.unknown}}</option>
         <option value="T2BIS">T2 bis</option>
         <option value="T3">T3</option>
@@ -21,9 +21,9 @@
   
   {{! Surface }}
    <div class="form-group">
-    <label for="surface" class="col-sm-2 control-label">Surface</label>
+    <label for="surface" class="col-sm-2 control-label required">Surface</label>
     <div class="col-sm-10">
-      <input type="number" class="form-control" id="surface" placeholder="en m²" value="{{model.surface}}">
+      <input type="number" min="0" max="100" class="form-control" id="surface" name="surface" placeholder="en m²" value="{{model.surface}}">
     </div>
   </div>
   
@@ -31,7 +31,7 @@
   <div class="form-group">
     <label for="nb-chambres" class="col-sm-2 control-label">Nombre de chambres</label>
     <div class="col-sm-10">
-      <select name="type" id="nb-etages" class="form-control">
+      <select name="type" id="nb-chambres" name="nb_chambres" class="form-control">
         <option value="">{{labels.general.unknown}}</option>
         {{#for 1 5}}
           <option value="{{this}}">{{this}}</option>
@@ -42,9 +42,9 @@
   
   {{! Titre }}
   <div class="form-group">
-    <label for="label" class="col-sm-2 control-label">Titre</label>
+    <label for="label" class="col-sm-2 control-label required">Titre</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control" id="label" placeholder="Titre" value="{{model.label}}">
+      <input type="text" maxlength="128" name="label" class="form-control" id="label" placeholder="Titre" value="{{model.label}}">
     </div>
   </div>
   
@@ -52,7 +52,7 @@
   <div class="form-group">
     <label for="description" class="col-sm-2 control-label">Description</label>
     <div class="col-sm-10">
-      <textarea class="form-control" id="description" placeholder="Description" rows="3">{{model.description}}</textarea>
+      <textarea class="form-control" id="description" name="description" placeholder="Description" rows="3">{{model.description}}</textarea>
     </div>
   </div>
   
@@ -60,7 +60,7 @@
   <div class="form-group">
     <label for="prix" class="col-sm-2 control-label">Prix</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control" id="prix" placeholder="Prix" value="{{model.price}}">
+      <input type="number" min="0" max="400000" class="form-control" id="prix" name="prix" placeholder="Prix" value="{{model.price}}">
     </div>
   </div>
   
@@ -68,7 +68,7 @@
   <div class="form-group">
     <label for="adresse" class="col-sm-2 control-label">Adresse</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control" id="adresse" placeholder="Adresse" value="{{model.adresse}}">
+      <input maxlength="256" type="text" class="form-control" id="adresse" name="adresse" placeholder="Adresse" value="{{model.adresse}}">
     </div>
   </div>
   
@@ -76,7 +76,7 @@
   <div class="form-group">
     <label for="etage" class="col-sm-2 control-label">Etage</label>
     <div class="col-sm-10">
-      <select name="type" id="etage" class="form-control">
+      <select name="type" id="etage" name="etage" class="form-control">
         <option value="">{{labels.general.unknown}}</option>
         <option value="0">RDC / RDJ</option>
         {{#for 1 10}}
@@ -90,7 +90,7 @@
   <div class="form-group">
     <label for="nb-etages" class="col-sm-2 control-label">Nombre d'étage (immmeuble)</label>
     <div class="col-sm-10">
-      <select name="type" id="nb-etages" class="form-control">
+      <select name="type" id="nb-etages" name="nb_etages" class="form-control">
         <option value="">{{labels.general.unknown}}</option>
         {{#for 1 10}}
           <option value="{{this}}">{{this}}</option>
@@ -103,7 +103,8 @@
    <div class="form-group">
     <label for="montant-charges" class="col-sm-2 control-label">Montant des charges annuelles</label>
     <div class="col-sm-10">
-      <input type="number" class="form-control" id="montant-charges" placeholder="Charges en euros" value="{{model.montant_charges}}">
+      <input type="number" min="0" max="1000" class="form-control" id="montant-charges" name="montant_charges"
+             placeholder="Charges en euros" value="{{model.montant_charges}}">
     </div>
   </div>
   
@@ -112,20 +113,20 @@
     <label class="col-sm-2 control-label">Détail des charges</label>
     <div class="col-sm-10">
       <div class="btn-group" data-toggle="buttons">
-        <label class="btn btn-primary">
-          <input type="checkbox" autocomplete="off"> Entretien commun
+        <label class="btn btn-default">
+          <input type="checkbox" autocomplete="off" id="ch-entretien-commun" > Entretien commun
         </label>
-        <label class="btn btn-primary">
-          <input type="checkbox" autocomplete="off"> Eau froide
+        <label class="btn btn-default">
+          <input type="checkbox" autocomplete="off" id="ch-eau-froide"> Eau froide
         </label>
-        <label class="btn btn-primary">
-          <input type="checkbox" autocomplete="off"> Eau chaude
+        <label class="btn btn-default">
+          <input type="checkbox" autocomplete="off" id="ch-eau-chaude"> Eau chaude
         </label>
-        <label class="btn btn-primary">
-          <input type="checkbox" autocomplete="off"> Chauffage
+        <label class="btn btn-default">
+          <input type="checkbox" autocomplete="off" id="ch-chauffage"> Chauffage
         </label>
-        <label class="btn btn-primary">
-          <input type="checkbox" autocomplete="off"> Gardien
+        <label class="btn btn-default">
+          <input type="checkbox" autocomplete="off" id="ch-gardien"> Gardien
         </label>
         
       </div>
@@ -136,7 +137,7 @@
    <div class="form-group">
     <label for="taxe-habitation" class="col-sm-2 control-label">Taxe d'habitation</label>
     <div class="col-sm-10">
-      <input type="number" class="form-control" id="taxe-habitation" placeholder="Montant en euros" value="{{model.taxe_habitation}}">
+      <input type="number" class="form-control" id="taxe-habitation" name="taxe_habitation" placeholder="Montant en euros" value="{{model.taxe_habitation}}">
     </div>
   </div>
   
@@ -144,7 +145,7 @@
    <div class="form-group">
     <label for="taxe-fonciere" class="col-sm-2 control-label">Taxe foncière</label>
     <div class="col-sm-10">
-      <input type="number" class="form-control" id="taxe-fonciere" placeholder="Montant en euros" value="{{model.taxe_fonciere}}">
+      <input type="number" class="form-control" id="taxe-fonciere" name="taxe_fonciere" placeholder="Montant en euros" value="{{model.taxe_fonciere}}">
     </div>
   </div>
   
@@ -153,14 +154,14 @@
     <label class="col-sm-2 control-label">Ascenceur</label>
     <div class="col-sm-10">
       <div class="btn-group" data-toggle="buttons">
-        <label class="btn btn-primary">
-          <input type="radio" autocomplete="off"> Inconnu
+        <label class="btn btn-default">
+          <input type="radio" name="ascenceur" autocomplete="off" value=""> Inconnu
         </label>
-        <label class="btn btn-primary">
-          <input type="radio" autocomplete="off"> Oui
+        <label class="btn btn-default">
+          <input type="radio" name="ascenceur" autocomplete="off" value="true"> Oui
         </label>
-        <label class="btn btn-primary">
-          <input type="radio" autocomplete="off"> Non
+        <label class="btn btn-default">
+          <input type="radio" name="ascenceur" autocomplete="off" value="false"> Non
         </label>
       </div>
     </div>
@@ -171,14 +172,14 @@
     <label class="col-sm-2 control-label">Cave</label>
     <div class="col-sm-10">
       <div class="btn-group" data-toggle="buttons">
-        <label class="btn btn-primary">
-          <input type="radio" autocomplete="off"> Inconnu
+        <label class="btn btn-default">
+          <input type="radio" autocomplete="off" name="cave" value=""> Inconnu
         </label>
-        <label class="btn btn-primary">
-          <input type="radio" autocomplete="off"> Oui
+        <label class="btn btn-default">
+          <input type="radio" autocomplete="off" name="cave" value="true"> Oui
         </label>
-        <label class="btn btn-primary">
-          <input type="radio" autocomplete="off"> Non
+        <label class="btn btn-default">
+          <input type="radio" autocomplete="off" name="cave" value="false"> Non
         </label>
       </div>
     </div>
@@ -189,17 +190,17 @@
     <label class="col-sm-2 control-label">Cuisine ouverte</label>
     <div class="col-sm-10">
       <div class="btn-group" data-toggle="buttons">
-        <label class="btn btn-primary">
-          <input type="radio" autocomplete="off"> Inconnu
+        <label class="btn btn-default">
+          <input type="radio" autocomplete="off" name="cuisine-ouverte" value=""> Inconnu
         </label>
-        <label class="btn btn-primary">
-          <input type="radio" autocomplete="off"> Oui
+        <label class="btn btn-default">
+          <input type="radio" autocomplete="off" name="cuisine-ouverte" value="true"> Oui
         </label>
-        <label class="btn btn-primary disabled">
-          <input type="radio" autocomplete="off" disabled> Possible
+        <label class="btn btn-default disabled">
+          <input type="radio" autocomplete="off"  name="cuisine-ouverte" value="MAYBE" disabled> Possible
         </label>
-        <label class="btn btn-primary">
-          <input type="radio" autocomplete="off"> Non
+        <label class="btn btn-default">
+          <input type="radio" autocomplete="off" name="cuisine-ouverte" value="false"> Non
         </label>
       </div>
     </div>
@@ -210,14 +211,14 @@
     <label class="col-sm-2 control-label">Stationnement</label>
     <div class="col-sm-10">
       <div class="btn-group" data-toggle="buttons">
-        <label class="btn btn-primary">
-          <input type="radio" autocomplete="off"> Inconnu
+        <label class="btn btn-default">
+          <input type="radio" autocomplete="off" name="stationnement" value=""> Inconnu
         </label>
-        <label class="btn btn-primary">
-          <input type="radio" autocomplete="off"> Oui
+        <label class="btn btn-default">
+          <input type="radio" autocomplete="off" name="stationnement" value="true"> Oui
         </label>
-        <label class="btn btn-primary">
-          <input type="radio" autocomplete="off"> Non
+        <label class="btn btn-default">
+          <input type="radio" autocomplete="off" name="stationnement" value="false"> Non
         </label>
       </div>
     </div>
@@ -228,19 +229,25 @@
     <label class="col-sm-2 control-label">Type de stationnement</label>
     <div class="col-sm-10">
       <div class="btn-group" data-toggle="buttons">
-        <label class="btn btn-primary">
-          <input type="radio" autocomplete="off"> Place en extérieur
+        <label class="btn btn-default">
+          <input type="radio" autocomplete="off" name="type-stationnement" value="SPOT_OUT"> Place en extérieur
         </label>
-        <label class="btn btn-primary">
-          <input type="radio" autocomplete="off"> Place en s-s
+        <label class="btn btn-default">
+          <input type="radio" autocomplete="off" name="type-stationnement" value="SPOT_IN"> Place en s-s
         </label>
-        <label class="btn btn-primary">
-          <input type="radio" autocomplete="off"> Box en extérieur
+        <label class="btn btn-default">
+          <input type="radio" autocomplete="off"  name="type-stationnement" value="BOX_IN"> Box en extérieur
         </label>
-        <label class="btn btn-primary">
-          <input type="radio" autocomplete="off"> Box en s-s
+        <label class="btn btn-default">
+          <input type="radio" autocomplete="off" name="type-stationnement" value="BOX_OUT"> Box en s-s
         </label>
       </div>
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <button type="submit" class="btn btn-primary">Enregistrer</button>
     </div>
   </div>
   

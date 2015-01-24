@@ -31,6 +31,12 @@ require.config({
             ],
             exports: 'Backbone'
         },
+        'backbone-validation': {
+            deps: [
+                'backbone'
+            ],
+            exports: 'Backbone'
+        },
         'bootstrap': {
             deps: [
                 'jquery'
@@ -57,6 +63,7 @@ require.config({
         'handlebars-orig': 'lib/handlebars-v2.0.0',
         'handlebars': 'lib/handlebars-helpers',
         'backbone-queryparams': 'lib/backbone-queryparams',
+        'backbone.validation': 'lib/backbone-validation',
         async: 'lib/async',
         hbs: 'lib/require-handlebars',
         moment: 'lib/moment',
