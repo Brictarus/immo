@@ -12,9 +12,12 @@ class AnnonceController extends GenericController {
   
   function handleRequest() {
     header('Access-Control-Allow-Origin: *');
+    $body = null;
     switch($_SERVER['REQUEST_METHOD']) {
       case 'POST':
-        $this->create();
+        //$this->create();
+        $body = file_get_contents('php://input');
+        $this->create(json_decode($body));
         break;
 
       case 'GET':
@@ -56,6 +59,15 @@ class AnnonceController extends GenericController {
     } else {
       header('HTTP/1.1 404 Not Found');
     }
+  }
+
+  function create($annonce) {
+    //echo $annonce->label;
+    $this->annonceDao->connect();
+    $res = $this->annonceDao->create($annonce);
+    $new = $this->annonceDao->findOne($res, null);
+    $this->annonceDao->disconnect();
+    $this->sendReponse($new);
   }
 }
 

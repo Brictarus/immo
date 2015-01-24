@@ -8,13 +8,16 @@
     <div class="col-sm-10">
       <select name="type_logement" id="type-logement" name="type_logement" class="form-control">
         <option value="">{{labels.general.unknown}}</option>
-        <option value="T2BIS">T2 bis</option>
+        <!--<option value="T2BIS">T2 bis</option>
         <option value="T3">T3</option>
         <option value="T3BIS">T3 bis</option>
         <option value="T4">T4</option>
         <option value="T4BIS">T4 bis</option>
         <option value="T5">T5</option>
-        <option value="T5+">T5+</option>
+        <option value="T5+">T5+</option>-->
+        {{#each typesLogements}}
+            <option value="{{this}}" {{ifequalsinline ../model.type_logement this "selected"}}>{{this}}</option>
+        {{/each}}
       </select>
     </div>
   </div>

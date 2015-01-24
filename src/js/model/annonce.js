@@ -13,7 +13,7 @@ define(['backbone'], function (Backbone) {
         required: true,
         msg: 'Le type de logement est obligatoire'
       }, {
-        oneOf: ["T2BISS", "T3T", "T3BIS", "T4", "T4BIS", "T5", "T5+"],
+        oneOf: ["T2BIS", "T3", "T3BIS", "T4", "T4BIS", "T5", "T5+"],
         msg: 'Le type de logement n\'est pas supporté'
       }],
       surface: [{

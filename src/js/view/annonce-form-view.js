@@ -13,8 +13,14 @@ define(['underscore',
               'submit #annonce-form': 'onSubmitForm'
             },
 
+            typesLogements: ["T2BIS", "T3", "T3BIS", "T4", "T4BIS", "T5", "T5+"],
+
             initialize: function (options) {
-              this.model = options.model || new Annonce({});
+              this.model = options.model || new Annonce({
+                type_logement: "T3",
+                surface: 70,
+                label: "Mon annonce " + Date.now()
+              });
               Backbone.Validation.bind(this, {
                 valid: _.bind(this.valid, this),
                 invalid: _.bind(this.invalid, this)
@@ -22,7 +28,11 @@ define(['underscore',
             },
 
             render: function () {
-              this.$el.html(template({labels: labels}));
+              this.$el.html(template({
+                labels: labels,
+                model: this.model.toJSON(),
+                typesLogements: this.typesLogements
+              }));
               var addImgForm = new AddImageFormView({el: "#add-image-container"});
               addImgForm.render();
               return this;
