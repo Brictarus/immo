@@ -7,11 +7,35 @@ class AnnonceDao extends GenericDao
   function __construct()
   {
     parent::__construct("annonce");
+    $this->entityFields = array(
+      "adresse" => "string",
+      "ascenceur" => "boolean",
+      "cave" => "boolean",
+      "ch_chauffage" => "boolean",
+      "ch_eau_chaude" => "boolean",
+      "ch_eau_froide" => "boolean",
+      "ch_entretien_commun" => "boolean",
+      "ch_gardien" => "boolean",
+      "cuisine_ouverte" => "boolean",
+      "date_creation" => "custom",
+      "description" => "string",
+      "etage" => "integer",
+      "label" => "string",
+      "montant_charges" => "integer",
+      "nb_chambres" => "integer",
+      "nb_etages" => "integer",
+      "stationnement" => "boolean",
+      "surface" => "integer",
+      "taxe_fonciere" => "integer",
+      "taxe_habitation" => "integer",
+      "type_logement" => "string",
+      "type_stationnement" => "string"
+    );
   }
 
-  function create($data)
+  private function getMappings($data)
   {
-    $arr = array(
+    return array(
       "adresse" => $data->adresse,
       "ascenceur" => $data->ascenceur,
       "cave" => $data->cave,
@@ -35,28 +59,31 @@ class AnnonceDao extends GenericDao
       "type_logement" => $data->type_logement,
       "type_stationnement" => $data->type_stationnement
     );
+  }
 
-    $fieldsNeedingQuotes = array(
-      "adresse" => true, "description" => true, "label" => true, "type_logement" => true, "type_stationnement" => true
-    );
-
+  function create($data)
+  {
+    $data->date_creation = "now()";
+    $mappings = $this->getMappings($data);
+    $fixedMappings = $this->checkFields($mappings);
     $keys = array();
     $values = array();
-    foreach ($arr as $key => $value) {
+    foreach ($fixedMappings as $key => $value) {
       if ($value != null) {
         array_push($keys, $key);
         $val = $value;
-        if ($fieldsNeedingQuotes[$key] != null) {
+        if ($this->entityFields[$key] === "string") {
           $val = "'" . $value . "'";
         }
+        //echo "$key = $value <br>";
         array_push($values, $val);
       }
     }
 
-    $sql = "insert into " . $this->tableName . " (" . join(", ", $keys) .") " .
+    $sql = "insert into " . $this->tableName . " (" . join(", ", $keys) . ") " .
       "values (" . join(", ", $values) . ")";
-    //echo $sql;
-    $insert_result = $this->daoConnector->query($sql);
+    //echo $sql."<br>";
+    $this->daoConnector->query($sql);
     $id = mysql_insert_id();
     return $id;
   }
