@@ -1,27 +1,22 @@
 <div class="annonce-detail">
-  <div class="jumbotron">
-    <div class="container">
-      <!--<h1>Hello, world!</h1>
-      <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
-      <p><a class="btn btn-primary btn-lg" href="test" role="button">Learn more »</a></p>-->
-      <div class="pics-container">
-        <a href="data/pics/pic1.jpg" data-title="My caption" data-lightbox="roadtrip"><img src="data/thumbnails/thumb0.jpg" /></a>
-        <a href="data/pics/pic2.jpg" data-title="My caption 2" data-lightbox="roadtrip"><img src="data/thumbnails/thumb1.jpg" /></a>
-        <a href="data/pics/pic3.jpg" data-title="My caption 2" data-lightbox="roadtrip"><img src="data/thumbnails/thumb2.jpg" /></a>
-        <img src="data/thumbnails/cb2c87e2a870ea653f3672d74b2ee5878943bd82.jpg" />
-        <img src="data/thumbnails/thumb0.jpg" />
-        <img src="data/thumbnails/thumb1.jpg" />
-        <img src="data/thumbnails/thumb2.jpg" />
-        <img src="data/thumbnails/cb2c87e2a870ea653f3672d74b2ee5878943bd82.jpg" />
-        <img src="data/thumbnails/thumb0.jpg" />
-        <img src="data/thumbnails/thumb1.jpg" />
-        <img src="data/thumbnails/thumb2.jpg" />
+  {{#if model.photos}}
+    <div class="jumbotron">
+      <div class="container">
+        <div class="pics-container">
+          {{#each model.photos}}
+            <a href="data/pics/{{this.id}}.{{this.extension}}" data-title="My caption" data-lightbox="roadtrip">
+              <img src="data/thumbnails/{{this.id}}.{{this.extension}}"/>
+            </a>
+          {{/each}}
+        </div>
       </div>
-      <div class="text-center pics-nb">12 photos disponibles</div>
+      <div class="text-center pics-nb">
+        {{model.photos.length}}
+        {{ifequalsinline model.photos.length 1 "photo disponible" "photos disponibles"}}
+      </div>
     </div>
-  </div>
+  {{/if}}
 
-  <!--<div class="container">-->
   <div class="panel panel-default">
     <div class="panel-heading">
       <div class="panel-title">{{model.label}}</div>
@@ -30,56 +25,111 @@
       <div class="panel-body">
         <dl class="dl-horizontal">
           <dt>Type de logement</dt>
-          <dd>T3</dd>
-          
-          <dt>Adresse</dt>
-          <dd>Non duis occaecat incididunt non mentitum magna eiusmod quamquam.</dd>
-          
+          <dd>{{model.type_logement}}</dd>
+
+          <dt>Surface</dt>
+          <dd>{{model.surface}} m²</dd>
+
+          <dt>Nombre de chambres</dt>
+          <dd>{{ifinline model.nb_chambres model.nb_chambres labels.general.unknown}}</dd>
+
           <dt>Description</dt>
-          <dd class="text-justify">Nostrud voluptatibus eu commodo. Est quis comprehenderit ne commodo 
-            despicationes an fabulas, legam qui id quis senserit nam varias occaecat ne 
-            familiaritatem e o noster laborum iudicem, nulla possumus senserit id aut noster 
-            te cillum, quis aliquip ad vidisse. Te aliqua eram quid tempor, malis 
-            consectetur occaecat anim incurreret, labore ita occaecat, varias appellat 
-            expetendis, quibusdam voluptatibus ex ingeniis ex an dolore voluptate quamquam 
-            se minim nescius te doctrina do tamen iis quibusdam. Ubi labore tractavissent 
-            aut singulis iis quibusdam si hic do eruditionem, litteris velit summis aut 
-            amet, ea esse domesticarum et litteris summis quis ad labore, incurreret ut 
-            officia, legam quamquam appellat. Pariatur illum iis admodum illustriora ne do 
-            elit quis enim incurreret. Et sunt despicationes. Ubi incurreret transferrem, 
-            ita aute commodo praetermissum. Fugiat a litteris in malis. Iis nam adipisicing 
-            ita quem a pariatur. Lorem laboris imitarentur, laborum do sunt aut quis 
-            illustriora officia aliqua litteris si malis singulis ex illustriora. Multos 
-            eruditionem nescius quorum doctrina, dolor probant se pariatur eu sunt senserit 
-            se concursionibus an sed dolore de ipsum. Tempor labore eiusmod, incurreret 
-            dolor laboris. Magna si nescius a hic te magna pariatur.</dd>
-          
-          <dt>Charges annuelles</dt>
-          <dd>2 000 €</dd>
-          
-          <dt>Charges</dt>
-          <dd><ul>
-            <li>Eau chaude</li>
-            <li>Eau froide</li>
-            <li>Chauffage</li>
-            <li>Gardien</li>
-          </ul></dd>
-          
-          <dt>Taxe d'habitation</dt>
-          <dd>1 500 €</dd>
-          
-          <dt>Taxe foncière</dt>
-          <dd>1 500 €</dd>
-          
+          <dd class="text-justify">{{ifinline model.description model.description labels.general.unknown}}</dd>
+
+          <dt>Prix</dt>
+          <dd>{{ifinline model.prix model.prix labels.general.unknown}} €</dd>
+
+          <dt>Adresse</dt>
+          <dd>{{ifinline model.adresse model.adresse labels.general.unknown}}</dd>
+
           <dt>Etage</dt>
-          <dd>2 / 5</dd>
-          
-          
+          <dd>
+            {{ifinline model.etage model.etage labels.general.unknown}}
+            {{#if model.nb_etages}}/{{model.nb_etages}}{{/if}}
+          </dd>
+
+          <dt>Charges annuelles</dt>
+          <dd>{{ifinline model.montant_charges model.montant_charges labels.general.unknown}} €</dd>
+
+          <dt>Charges</dt>
+          <dd>
+            <ul>
+              {{{ifinline model.ch_entretien_commun "<li>Entretien commun</li>" }}}
+              {{{ifinline model.ch_eau_froide "<li>Eau froide</li>" }}}
+              {{{ifinline model.ch_eau_chaude "<li>Eau chaude</li>" }}}
+              {{{ifinline model.ch_chauffage "<li>Chauffage</li>" }}}
+              {{{ifinline model.ch_gardien "<li>Gardien</li>" }}}
+            </ul>
+          </dd>
+
+          <dt>Taxe d'habitation</dt>
+          <dd>{{ifinline model.taxe_habitation model.taxe_habitation labels.general.unknown}} €</dd>
+
+          <dt>Taxe foncière</dt>
+          <dd>{{ifinline model.taxe_fonciere model.taxe_fonciere labels.general.unknown}} €</dd>
+
+          <dt>Ascenceur</dt>
+          <dd>
+            {{#ifequals model.ascenceur "0"}}
+              {{labels.general.no}}
+            {{else}}
+              {{#ifequals model.ascenceur "1"}}
+                {{labels.general.yes}}
+              {{else}}
+                {{labels.general.unknown}}
+              {{/ifequals}}
+            {{/ifequals}}
+          </dd>
+
+          <dt>Cave</dt>
+          <dd>
+            {{#ifequals model.cave "0"}}
+              {{labels.general.no}}
+            {{else}}
+              {{#ifequals model.cave "1"}}
+                {{labels.general.yes}}
+              {{else}}
+                {{labels.general.unknown}}
+              {{/ifequals}}
+            {{/ifequals}}
+          </dd>
+
+          <dt>Cuisine ouverte</dt>
+          <dd>
+            {{#ifequals model.cuisine_ouverte "0"}}
+              {{labels.general.no}}
+            {{else}}
+              {{#ifequals model.cuisine_ouverte "1"}}
+                {{labels.general.yes}}
+              {{else}}
+                {{labels.general.unknown}}
+              {{/ifequals}}
+            {{/ifequals}}
+          </dd>
+
+          <dt>Stationnement</dt>
+          <dd>
+            {{#ifequals model.type_stationnement "0"}}
+              {{labels.general.no}}
+            {{else}}
+              {{#ifequals model.type_stationnement "1"}}
+                {{labels.general.yes}}
+              {{else}}
+                {{labels.general.unknown}}
+              {{/ifequals}}
+            {{/ifequals}}
+          </dd>
+
+          <dt>Type de stationnement</dt>
+          <dd>
+            {{ifinline model.type_stationnement model.type_stationnement labels.general.unknown}}
+          </dd>
+
         </dl>
       </div>
     </div>
   </div>
-  
+
   <div class="panel panel-info comments">
     <div class="panel-heading">
       <h4 class="panel-title">
@@ -104,10 +154,12 @@
           <div class="comment-date">Ajouté le 01/02/2015 à 16h35</div>
         </div>
         <div class="list-group-item">
-          <div class="media-body">Ceci est un premier commentaire. et un deuxieme et un troisieme et un quatrième</div>
+          <div class="media-body">Ceci est un premier commentaire. et un deuxieme et un troisieme et un
+            quatrième
+          </div>
           <div class="comment-date">Ajouté le 01/02/2015 à 16h35</div>
         </div>
-        <input type="button" class="btn btn-primary" value="Ajouter un commentaire" />
+        <input type="button" class="btn btn-primary" value="Ajouter un commentaire"/>
       </div>
     </div>
   </div>

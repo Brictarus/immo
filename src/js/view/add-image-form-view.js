@@ -6,10 +6,21 @@ define(['underscore', 'backbone', 'view/image-uploader-view', 'hbs!template/add-
       'submit form[name="form-add-image"]': 'onFormSubmit'
     },
     
-    initialize: function() {
-      _.bindAll(this, 'beforeSubmit', 'onUploadProgress');
+    initialize: function(options) {
+      _.bindAll(this, 'beforeSubmit', 'onUploadProgress', 'onUploadSuccess');
       this.imageUploadsCount = 0;
       this.imageUploadViews = [];
+
+      //this.photosIds = options.photosIds || [];
+      this.photos = new Backbone.Collection(options.photos || []);
+    },
+
+    getPhotosIds: function() {
+      return this.photos.pluck("id");
+    },
+
+    getPhotos: function() {
+      return this.photos;
     },
     
     render: function() {
@@ -27,7 +38,7 @@ define(['underscore', 'backbone', 'view/image-uploader-view', 'hbs!template/add-
         //target:   '#output',   // target element(s) to be updated with server response 
         beforeSubmit:  this.beforeSubmit,  // pre-submit callback 
         uploadProgress: this.onUploadProgress, //upload progress callback 
-        //success:       afterSuccess,
+        success: this.onUploadSuccess,
         resetForm: false        // reset the form after successful submit 
       }; 
       //this.beforeSubmit();
@@ -96,6 +107,11 @@ define(['underscore', 'backbone', 'view/image-uploader-view', 'hbs!template/add-
       console.log(percentComplete + '%'); //update progressbar percent complete
       this.imageUploadViews[options.tempId].updateProgress(percentComplete);
     },
+
+    onUploadSuccess: function(rawModel) {
+      var photo = new Backbone.Model(rawModel);
+      this.photos.add(photo);
+    },
     
     showError: function(error) {
       var $alert = this.$el.find('.alert-container');
@@ -104,7 +120,7 @@ define(['underscore', 'backbone', 'view/image-uploader-view', 'hbs!template/add-
     },
     
     hideError: function() {
-      $(this.$el.find('.alert')).alert('close');
+      this.$('.alert').alert('close');
     }
   });
   return AddImageFormView;

@@ -1,7 +1,9 @@
 define({
   "root": {
     "general": {
-      "unknown": "-"
+      "unknown": "-",
+      "yes": "oui",
+      "no": "non"
     }
   }
 });

@@ -15,9 +15,10 @@ class MySql
     $this->db = null;
   }
   
-  function connect($db=null) {
-    if($db != null) {
-      $this->dbName = $db;
+  function connect($conn=null) {
+    if ($conn != null) {
+      $this->sqlConnection = $conn;
+      return $this->sqlConnection;
     }
 
     $this->sqlConnection = @mysql_connect($this->sqlServer,$this->sqlUser,$this->sqlPass);
@@ -28,6 +29,7 @@ class MySql
     if (!@mysql_select_db($this->dbName)) {
       throw new Exception('Sélection de la base de données impossible');
     }
+    return $this->sqlConnection;
   }
   
   function query($request) {
@@ -50,7 +52,7 @@ class MySql
     return @mysql_num_rows($this->requete[$i]);
   }
   
-  function disconnect() {
+  function disconnect($conn = null) {
     $isDisconnected = @mysql_close($this->sqlConnection);
     if ($isDisconnected) {
       $this->sqlConnection = null;

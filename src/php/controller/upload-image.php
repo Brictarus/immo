@@ -14,11 +14,11 @@ class UploadImageController extends GenericController {
     //continue only if $_POST is set and it is a Ajax request
     if(isset($_POST) && isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
       $this->uploadImage($_FILES['image_file']);
-    } else if ($_SERVER['REQUEST_METHOD'] == 'DELETE') {
+    } /*else if ($_SERVER['REQUEST_METHOD'] == 'DELETE') {
       $this->dao->connect();
       $newId = $this->dao->deleteAll();
       $this->dao->disconnect();
-    }
+    }*/
     /*$this->dao->connect();
     $newId = $this->dao->create("toto");
     $this->dao->disconnect();
@@ -75,7 +75,13 @@ class UploadImageController extends GenericController {
       $image_name_only = strtolower($image_info["filename"]);//file name only, no extension
 
       $this->dao->connect();
-      $newId = $this->dao->create($image_extension);
+      $data = array(
+        "extension" => $image_extension,
+        "nom" => substr($image_name, 0, 64)
+      );
+      $newId = $this->dao->create($data);
+      $result = $this->dao->findOne($newId, null);
+
       $this->dao->disconnect();
       
       
@@ -98,12 +104,12 @@ class UploadImageController extends GenericController {
         }
 
         /* We have succesfully resized and created thumbnail image */
-        $res = array(
+        /*$res = array(
           "id" => $newId,
           "thumbnailUrl" => 'data/thumbnails/' . $new_file_name,
           "imageUrl" => "data/pics/". $new_file_name
-        );
-        $this->sendDataAsJson($res);
+        );*/
+        $this->sendDataAsJson($result);
       }
 
       imagedestroy($image_res); //freeup memory

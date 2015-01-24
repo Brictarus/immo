@@ -64,14 +64,14 @@ class GenericDao
     }
   }
 
-  function connect($db = null)
+  function connect()
   {
     return $this->daoConnector->connect();
   }
 
-  function disconnect($db = null)
+  function disconnect($conn = null)
   {
-    return $this->daoConnector->disconnect();
+    return $this->daoConnector->disconnect($conn);
   }
 
   function findOne($id, $fields, $idField = "id")

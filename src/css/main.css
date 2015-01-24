@@ -24,6 +24,14 @@
   font-weight: bold; 
 }
 
+.annonce-detail .jumbotron .container {
+  text-align: center;
+}
+
+.annonce-detail .jumbotron img {
+  max-width: 150px;
+}
+
 .annonces-list .thumbnail-annonce .pics-nb {
   position: relative;
   right: 20px;

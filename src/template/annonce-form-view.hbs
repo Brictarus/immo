@@ -1,7 +1,15 @@
 <div id="add-image-container"></div>
 
 <form action="#" class="form-horizontal" id="annonce-form">
-  
+
+  {{! Titre }}
+  <div class="form-group">
+      <label for="label" class="col-sm-2 control-label required">Titre</label>
+      <div class="col-sm-10">
+          <input type="text" maxlength="128" name="label" class="form-control" id="label" placeholder="Titre" value="{{model.label}}">
+      </div>
+  </div>
+
   {{! type de logement }}
   <div class="form-group">
     <label for="type-logement" class="col-sm-2 control-label required">Type de logement</label>
@@ -40,14 +48,6 @@
           <option value="{{this}}">{{this}}</option>
         {{/for}}
       </select>
-    </div>
-  </div>
-  
-  {{! Titre }}
-  <div class="form-group">
-    <label for="label" class="col-sm-2 control-label required">Titre</label>
-    <div class="col-sm-10">
-      <input type="text" maxlength="128" name="label" class="form-control" id="label" placeholder="Titre" value="{{model.label}}">
     </div>
   </div>
   

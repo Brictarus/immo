@@ -69,14 +69,17 @@ class AnnonceDao extends GenericDao
     $keys = array();
     $values = array();
     foreach ($fixedMappings as $key => $value) {
-      if ($value != null) {
-        array_push($keys, $key);
-        $val = $value;
-        if ($this->entityFields[$key] === "string") {
-          $val = "'" . $value . "'";
+      $fieldType = $this->entityFields[$key];
+      if ($fieldType != null) {
+        if ($value != null) {
+          array_push($keys, $key);
+          $val = $value;
+          if ($fieldType === "string") {
+            $val = "'" . $value . "'";
+          }
+          //echo "$key = $value <br>";
+          array_push($values, $val);
         }
-        //echo "$key = $value <br>";
-        array_push($values, $val);
       }
     }
 

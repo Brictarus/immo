@@ -33,13 +33,18 @@ define(['underscore',
             model: this.model.toJSON(),
             typesLogements: this.typesLogements
           }));
-          var addImgForm = new AddImageFormView({el: "#add-image-container"});
-          addImgForm.render();
+
+          this.addImgFormView = new AddImageFormView({
+            el: "#add-image-container",
+            photos: this.model.get('photos')
+          });
+          this.addImgFormView.render();
           return this;
         },
 
         onSubmitForm: function () {
           this.populateModel(this.model);
+          console.log(this.model.toJSON());
           if (this.model.isValid(true)) {
             this.model.save({}, {
               success: _.bind(function () {
@@ -77,6 +82,8 @@ define(['underscore',
             stationnement: this.radioToBool(this.$('input[name="stationnement"]:checked').val()),
             type_stationnement: this.$('input[name="type-stationnement"]:checked').val() || null
           };
+          var photos = this.addImgFormView.getPhotos();
+          attrs.photos = (photos == null) ? null : photos.toJSON();
 
           model.set(attrs);
         },

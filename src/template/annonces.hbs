@@ -1,25 +1,31 @@
-
 <div class="annonces-list">
   {{#each collection}}
-  <div class="row">
-   <div class="col-md-12">
-      <div class="col-md-2 col-xs-4">
-        <div class="thumbnail-annonce">
-          <a href="{{../config.urlRoot}}/#annonce/{{this.id}}"><img class="img-thumbnail" src="data/thumbnails/cb2c87e2a870ea653f3672d74b2ee5878943bd82.jpg" alt=""></a>
-          <div class="pics-nb">3</div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="col-md-2 col-xs-4">
+          <div class="thumbnail-annonce">
+            <a href="{{../config.urlRoot}}/#annonce/{{this.id}}"><img class="img-thumbnail"
+                                                                      src="data/thumbnails/cb2c87e2a870ea653f3672d74b2ee5878943bd82.jpg"
+                                                                      alt=""></a>
+
+            <div class="pics-nb">3</div>
+          </div>
+        </div>
+        <div class="col-md-10 col-xs-8">
+          <div class="row title">
+            <a href="{{../config.urlRoot}}/#annonce/{{this.id}}">{{this.label}}</a>
+          </div>
+          <!--<div class="row">Ceci est une description bidon blabla bla. Ceci est une description bidon blabla bla. Ceci est une description bidon blabla bla. Ceci est une description bidon blabla bla. Ceci est une description bidon blabla bla. Ceci est une description bidon blabla bla. Ceci est une description bidon blabla bla. Ceci est une description bidon blabla bla. Ceci est une description bidon blabla bla. Ceci est une description bidon blabla bla. </div>-->
+          <div class="row creation-date">Ajoutée le {{formatDate this.date_creation "DD/MM/YYYY"}}
+            à {{formatDate this.date_creation "HH:mm"}}</div>
+          <div class="row city">Lyon 3</div>
+          <div class="row price">220 000 €</div>
         </div>
       </div>
-      <div class="col-md-10 col-xs-8">
-        <div class="row title">
-          <a href="{{../config.urlRoot}}/#annonce/{{this.id}}">{{this.label}}</a>
-        </div>
-        <!--<div class="row">Ceci est une description bidon blabla bla. Ceci est une description bidon blabla bla. Ceci est une description bidon blabla bla. Ceci est une description bidon blabla bla. Ceci est une description bidon blabla bla. Ceci est une description bidon blabla bla. Ceci est une description bidon blabla bla. Ceci est une description bidon blabla bla. Ceci est une description bidon blabla bla. Ceci est une description bidon blabla bla. </div>-->
-        <div class="row creation-date">Ajoutée le {{formatDate this.date_creation "DD/MM/YYYY"}} à {{formatDate this.date_creation "HH:mm"}}</div>
-        <div class="row city">Lyon 3</div>
-        <div class="row price">220 000 €</div>
-     </div>
     </div>
-  </div>
-  {{#unlessequals @index ../lastIndex}}<hr>{{/unlessequals}}
+    {{#unlessequals @index ../lastIndex}}
+      <hr>{{/unlessequals}}
+  {{else}}
+    Aucune annonce présente
   {{/each}}
 </div>
