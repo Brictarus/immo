@@ -30,7 +30,10 @@ define(['underscore',
 
             onSubmitForm: function () {
               this.populateModel(this.model);
-              console.log(this.model.isValid(true));
+              if (this.model.isValid(true)) {
+                this.model.save({}, {
+                });
+              }
               return false;
             },
 
@@ -79,17 +82,19 @@ define(['underscore',
               var formGroup = view.$(attrSelector).closest('.form-group');
               formGroup.removeClass('has-error');
               formGroup.removeClass('has-feedback');
-              view.$(attrSelector + " + .form-control-feedback").remove();
+
+              //view.$(attrSelector + " + .form-control-feedback").remove();
+              view.$(attrSelector).parent().find('.form-control-feedback, .help-inline').remove();
             },
             invalid: function(view, attr, error, selector) {
               var attrSelector = '[' + selector + '~="' + attr + '"]';
               var formGroup = view.$(attrSelector).closest('.form-group');
               formGroup.addClass('has-error');
               formGroup.addClass('has-feedback');
-              view.$(attrSelector + " + .form-control-feedback").remove();
-              view.$(attrSelector).after('' +
-              '<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>'
-              + 'console.log("Validation error [" + attr + "] : " + error);');
+              //view.$(attrSelector + " + .form-control-feedback").remove();
+              view.$(attrSelector).parent().find('.form-control-feedback, .help-inline').remove();
+              view.$(attrSelector).after('<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>');
+              view.$(attrSelector).parent().append('<div class="help-inline">' + error + '</div>');
             }
           })
           ;

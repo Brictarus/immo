@@ -85,7 +85,12 @@
 
 .form-group .control-label.required:after {
   content: "*";
-  color: red;
+  color: #a94442;
   font-weight: bold;
   margin-left: 5px;
+}
+
+.form-group.has-error .help-inline {
+  color: #a94442;
+  font-size: 0.9em;
 }
