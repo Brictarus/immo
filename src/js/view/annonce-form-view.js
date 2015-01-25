@@ -24,11 +24,11 @@ define(['underscore',
               surface: 70,
               label: "Mon annonce " + Date.now()
             });
-            Backbone.Validation.bind(this, {
-              valid: _.bind(this.valid, this),
-              invalid: _.bind(this.invalid, this)
-            });
           }
+          Backbone.Validation.bind(this, {
+            valid: _.bind(this.valid, this),
+            invalid: _.bind(this.invalid, this)
+          });
         },
 
         render: function () {
