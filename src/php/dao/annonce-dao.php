@@ -67,18 +67,18 @@ class AnnonceDao extends GenericDao
   {
     $res = parent::findOne($id, $fields, $idField);
     if ($res != null) {
-      foreach($res as $key => $value) {
+      foreach ($res as $key => $value) {
         $type = $this->entityFields[$key];
         if ($value != null && $type != null) {
-            switch($type) {
-              case "integer":
-              case "boolean":
-                settype($value, $type);
-                $res[$key] = $value;
-                break;
-              default:
-                break;
-            }
+          switch ($type) {
+            case "integer":
+            case "boolean":
+              settype($value, $type);
+              $res[$key] = $value;
+              break;
+            default:
+              break;
+          }
         }
       }
     }
@@ -113,6 +113,34 @@ class AnnonceDao extends GenericDao
     $this->daoConnector->query($sql);
     $id = mysql_insert_id();
     return $id;
+  }
+
+  function update($id, $data, $idField = "id")
+  {
+    $mappings = $this->getMappings($data);
+    $fixedMappings = $this->checkFields($mappings);
+    $keys = array();
+    $assignments = array();
+    foreach ($fixedMappings as $key => $value) {
+      if ($key != "date_creation") {
+
+        $fieldType = $this->entityFields[$key];
+        if ($fieldType != null) {
+          //array_push($keys, $key);
+          $val = $value;
+          if ($fieldType === "string") {
+            $val = "'" . $value . "'";
+          }
+          array_push($assignments, $key . "=" . $val);
+        }
+      }
+    }
+
+    $sql = "UPDATE " . $this->tableName .
+      " SET " . join(", ", $assignments) .
+      " WHERE $idField = $id";
+    //echo $sql . "<br>";
+    $this->daoConnector->query($sql);
   }
 }
 

@@ -4,7 +4,7 @@
       <div class="container">
         <div class="pics-container">
           {{#each model.photos}}
-            <a href="data/pics/{{this.id}}.{{this.extension}}" data-title="My caption" data-lightbox="roadtrip">
+            <a href="data/pics/{{this.id}}.{{this.extension}}" data-title="{{this.nom}}" data-lightbox="roadtrip">
               <img src="data/thumbnails/{{this.id}}.{{this.extension}}"/>
             </a>
           {{/each}}
@@ -70,10 +70,10 @@
 
           <dt>Ascenceur</dt>
           <dd>
-            {{#ifequals model.ascenceur "0"}}
+            {{#ifequals model.ascenceur false}}
               {{labels.general.no}}
             {{else}}
-              {{#ifequals model.ascenceur "1"}}
+              {{#ifequals model.ascenceur true}}
                 {{labels.general.yes}}
               {{else}}
                 {{labels.general.unknown}}
@@ -83,10 +83,10 @@
 
           <dt>Cave</dt>
           <dd>
-            {{#ifequals model.cave "0"}}
+            {{#ifequals model.cave false}}
               {{labels.general.no}}
             {{else}}
-              {{#ifequals model.cave "1"}}
+              {{#ifequals model.cave true}}
                 {{labels.general.yes}}
               {{else}}
                 {{labels.general.unknown}}
@@ -96,10 +96,10 @@
 
           <dt>Cuisine ouverte</dt>
           <dd>
-            {{#ifequals model.cuisine_ouverte "0"}}
+            {{#ifequals model.cuisine_ouverte false}}
               {{labels.general.no}}
             {{else}}
-              {{#ifequals model.cuisine_ouverte "1"}}
+              {{#ifequals model.cuisine_ouverte true}}
                 {{labels.general.yes}}
               {{else}}
                 {{labels.general.unknown}}
@@ -109,10 +109,10 @@
 
           <dt>Stationnement</dt>
           <dd>
-            {{#ifequals model.type_stationnement "0"}}
+            {{#ifequals model.type_stationnement false}}
               {{labels.general.no}}
             {{else}}
-              {{#ifequals model.type_stationnement "1"}}
+              {{#ifequals model.type_stationnement true}}
                 {{labels.general.yes}}
               {{else}}
                 {{labels.general.unknown}}

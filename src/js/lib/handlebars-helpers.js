@@ -1,7 +1,7 @@
 /**
  * Set of generic handlebars helpers
  */
-define(['handlebars-orig', 'moment', 'underscore-string'], function(Handlebars, moment, _s) {
+define(['handlebars-orig', 'moment', 'underscore.string'], function(Handlebars, moment, _s) {
 
     /**
      * This helper provides a more fluent syntax for inline ifs. i.e. if

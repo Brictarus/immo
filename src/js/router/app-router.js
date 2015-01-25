@@ -20,7 +20,7 @@ define(['backbone', 'config', 'model/annonce', 'view/annonce-detail-view', 'view
 
       main: function() {
         // Instanciation des vues
-        App.creationMenu.show();
+        App.creationMenu.showButtonNew().hideButtonUpdate();
         var annoncesListView = new AnnoncesListView({
             el: "#main"
         });
@@ -28,12 +28,13 @@ define(['backbone', 'config', 'model/annonce', 'view/annonce-detail-view', 'view
       },
 
       detail: function(id) {
-        App.creationMenu.show();
+        App.creationMenu.showButtonNew().showButtonUpdate(id);
+        $("html, body").animate({ scrollTop: 0 }, "slow");
         new AnnonceDetailView({el : '#main', annonceId: id}).render();
       },
 
       updateAnnonce: function(id) {
-        App.creationMenu.hide();
+        App.creationMenu.hideButtonNew().hideButtonUpdate();
         var annonce = new Annonce({id: id});
         annonce.fetch({
           success: function() {
@@ -43,16 +44,16 @@ define(['backbone', 'config', 'model/annonce', 'view/annonce-detail-view', 'view
       },
       
       newAnnonce: function() {
-        App.creationMenu.hide();
+        App.creationMenu.hideButtonNew().hideButtonUpdate();
         new AnnonceFormView({el : '#main'}).render();
       },
       
       newAnnonceBonCoin: function() {
-        App.creationMenu.hide();
+        App.creationMenu.hideButtonNew().hideButtonUpdate();
       },
       
       newAnnonceSeLoger: function() {
-        App.creationMenu.hide();
+        App.creationMenu.hideButtonNew().hideButtonUpdate();
       }
     });
     

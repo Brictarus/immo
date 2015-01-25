@@ -1,3 +1,4 @@
 /src/php/dao/conf/
 /.idea
 /src/data
+/src/test.php

@@ -34,7 +34,8 @@ class AnnonceController extends GenericController
         break;
 
       case 'PUT':
-        $this->update($_GET['id']);
+        $body = file_get_contents('php://input');
+        $this->update(json_decode($body));
         break;
 
       case 'DELETE':
@@ -97,6 +98,23 @@ class AnnonceController extends GenericController
     $new = $this->_findOne($res);
     $this->annonceDao->disconnect();
     $this->sendReponse($new);
+  }
+
+  function update($annonce)
+  {
+    $conn = $this->annonceDao->connect();
+    $this->photoDao->connect($conn);
+    $this->annonceDao->update($annonce->id, $annonce);
+    if (sizeof($annonce->photos) > 0) {
+      $photoIds = array();
+      foreach ($annonce->photos as $photo) {
+        array_push($photoIds, $photo->id);
+      }
+      $this->photoDao->updateAnnonceId($photoIds, $annonce->id);
+    }
+    $res = $this->_findOne($annonce->id);
+    $this->annonceDao->disconnect();
+    $this->sendReponse($res);
   }
 }
 

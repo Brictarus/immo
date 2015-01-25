@@ -83,11 +83,24 @@
   content:"\e080";
 }
 
-.new-annonces-btn-group {
+.header-button-menu {
   margin-top: 8px;
 }
 
-.image-list .progress {
+#add-image-container .image-list .photo-thumbnail img {
+  width: 100%;
+}
+
+#add-image-container .image-list td {
+  vertical-align: middle;
+}
+
+.photo-remove.glyphicon-remove {
+  cursor: pointer;
+  color: #a94442;
+}
+
+#add-image-container .image-list .progress {
   margin-bottom: 0px;
 }
 

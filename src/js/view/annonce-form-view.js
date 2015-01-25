@@ -53,7 +53,10 @@ define(['underscore',
             this.model.save({}, {
               success: _.bind(function () {
                 App.router.navigate('#annonce/' + this.model.id, {trigger: true});
-              }, this)
+              }, this),
+              error: function() {
+                debugger;
+              }
             });
           }
           return false;
@@ -73,7 +76,7 @@ define(['underscore',
             etage: this.$('#etage').val() || null,
             nb_etages: this.$('#nb-etages').val() || null,
             montant_charges: this.$('#montant-charges').val() || null,
-            ch_entretien_commun: this.$('#ch-entretien-commun').is(':checked'),
+            ch_entretien_commun: this.$('#ch-entretien-commun').is(':checked') ,
             ch_eau_froide: this.$('#ch-eau-froide').is(':checked'),
             ch_eau_chaude: this.$('#ch-eau-chaude').is(':checked'),
             ch_chauffage: this.$('#ch-chauffage').is(':checked'),

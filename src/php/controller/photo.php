@@ -12,9 +12,21 @@ class UploadImageController extends GenericController {
   
   function handleRequest() {
     //continue only if $_POST is set and it is a Ajax request
-    if(isset($_POST) && isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
-      $this->uploadImage($_FILES['image_file']);
-    } /*else if ($_SERVER['REQUEST_METHOD'] == 'DELETE') {
+    switch ($_SERVER['REQUEST_METHOD']) {
+      case "POST":
+        if(isset($_POST) && isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+          $this->uploadImage($_FILES['image_file']);
+        }
+        break;
+      case "DELETE":
+        if (isset($_GET['id'])) {
+          $id = $_GET['id'];
+          settype($id, "integer");
+          $this->delete($id);
+        }
+        break;
+    }
+     /*else if ($_SERVER['REQUEST_METHOD'] == 'DELETE') {
       $this->dao->connect();
       $newId = $this->dao->deleteAll();
       $this->dao->disconnect();
@@ -23,6 +35,13 @@ class UploadImageController extends GenericController {
     $newId = $this->dao->create("toto");
     $this->dao->disconnect();
     echo $newId;*/
+  }
+
+  private function delete($id) {
+    $this->dao->connect();
+    $this->dao->delete($id);
+    $this->dao->disconnect();
+    header("HTTP/1.1 204 No Content");
   }
   
   private function uploadImage($file) {

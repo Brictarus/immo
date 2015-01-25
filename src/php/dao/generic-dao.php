@@ -120,14 +120,22 @@ class GenericDao
     return null;
   }
 
-  function update($id, $fields = null, $idField = "id")
+  function update($id, $data, $idField = "id")
   {
 
   }
 
   function delete($id, $idField = "id")
   {
+    // construction de la requête
+    $sql = 'DELETE FROM ' . $this->tableName
+      . ' WHERE ' . $idField . '=' . $id;
 
+    // Execution de la requête
+    $retval = $this->daoConnector->query($sql, $this->daoConnector->sqlConnection);
+    if (!$retval) {
+      throw new Exception('Impossible de récupérer les données lors de l\'éxécution de la requête : ' . mysql_error());
+    }
   }
 
   function deleteAll()
