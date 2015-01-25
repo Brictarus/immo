@@ -51,6 +51,19 @@ class PhotoDao extends GenericDao
     }
     return $tempArr;
   }
+
+  function deleteByAnnonceId($annonceId)
+  {
+    // construction de la requête
+    $sql = 'DELETE FROM ' . $this->tableName
+      . ' WHERE annonce_id = ' . $annonceId;
+
+    // Execution de la requête
+    $retval = $this->daoConnector->query($sql, $this->daoConnector->sqlConnection);
+    if (!$retval) {
+      throw new Exception('Impossible d executer la requête : ' . mysql_error());
+    }
+  }
 }
 
 /*$photoDao = new PhotoDao();

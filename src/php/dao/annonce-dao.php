@@ -119,17 +119,19 @@ class AnnonceDao extends GenericDao
   {
     $mappings = $this->getMappings($data);
     $fixedMappings = $this->checkFields($mappings);
-    $keys = array();
     $assignments = array();
     foreach ($fixedMappings as $key => $value) {
       if ($key != "date_creation") {
 
         $fieldType = $this->entityFields[$key];
         if ($fieldType != null) {
-          //array_push($keys, $key);
           $val = $value;
-          if ($fieldType === "string") {
-            $val = "'" . $value . "'";
+          if ($value == null) {
+            $val = "null";
+          } else {
+            if ($fieldType === "string") {
+              $val = "'" . $value . "'";
+            }
           }
           array_push($assignments, $key . "=" . $val);
         }

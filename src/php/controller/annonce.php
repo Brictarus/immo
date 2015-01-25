@@ -123,11 +123,16 @@ class AnnonceController extends GenericController
     $this->sendReponse($res);
   }
 
-  function delete($id) {
-    $this->annonceDao->connect();
+  function delete($id)
+  {
     settype($id, "integer");
-    $this->annonceDao->delete($id);
-    $this->annonceDao->disconnect();
+    if ($id != null) {
+      $conn = $this->annonceDao->connect();
+      $this->photoDao->connect($conn);
+      $this->photoDao->deleteByAnnonceId($id);
+      $this->annonceDao->delete($id);
+      $this->annonceDao->disconnect();
+    }
     header("HTTP/1.1 204 No Content");
   }
 }

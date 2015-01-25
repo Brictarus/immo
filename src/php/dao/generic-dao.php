@@ -29,16 +29,22 @@ class GenericDao
             case "string":
               settype($mappings[$key], $type);
               $mappings[$key] = mysql_real_escape_string($mappings[$key]);
+              $result[$key] = $mappings[$key];
               break;
             case "integer":
-            case "boolean":
             case "float":
               settype($mappings[$key], $type);
+              $result[$key] = $mappings[$key];
+              break;
+            case "boolean":
+              settype($mappings[$key], $type);
+              $result[$key] = $mappings[$key] == true ? "true" : "false";
               break;
             default:
               break;
           }
-          $result[$key] = $mappings[$key];
+        } else {
+          $result[$key] = null;
         }
       }
       return $result;
