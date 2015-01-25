@@ -1,6 +1,7 @@
 <div class="header-button-menu">
-  <a class="btn btn-info update-current-annonce {{ifinline buttonUpdateHidden "hide"}}" href="{{updateAnnonceUrl}}">Modifier</a>
-  <div class="btn-group new-annonces-btn-group {{ifinline buttonNewHidden "hide"}}">
+  <button class="btn btn-danger delete-current-annonce" {{#if buttonUpdateHidden}}style="display: none"{{/if}}>Supprimer</button>
+  <a class="btn btn-info update-current-annonce" {{#if buttonUpdateHidden}}style="display: none"{{/if}} href="{{updateAnnonceUrl}}">Modifier</a>
+  <div class="btn-group new-annonces-btn-group" {{#if buttonNewHidden}}style="display: none"{{/if}}>
     <button type="button" id="new-annonce" class="btn btn-primary">Ajouter une annonce</button>
     <button type="button" class="btn btn-primary dropdown-toggle"
             data-toggle="dropdown">

@@ -58,6 +58,7 @@ class AnnonceController extends GenericController
 
   function findOne($id)
   {
+    settype($id, "integer");
     $conn = $this->annonceDao->connect();
     $this->photoDao->connect($conn);
     $res = $this->_findOne($id);
@@ -71,6 +72,7 @@ class AnnonceController extends GenericController
 
   private function _findOne($id, $fetchPhotos = true)
   {
+    settype($id, "integer");
     $entity = $this->annonceDao->findOne($id, null);
     if ($entity == null) {
       return null;
@@ -91,7 +93,9 @@ class AnnonceController extends GenericController
     if (sizeof($annonce->photos) > 0) {
       $photoIds = array();
       foreach ($annonce->photos as $photo) {
-        array_push($photoIds, $photo->id);
+        $photoId = $photo->id;
+        settype($photoId, "integer");
+        array_push($photoIds, $photoId);
       }
       $this->photoDao->updateAnnonceId($photoIds, $res);
     }
@@ -104,17 +108,27 @@ class AnnonceController extends GenericController
   {
     $conn = $this->annonceDao->connect();
     $this->photoDao->connect($conn);
-    $this->annonceDao->update($annonce->id, $annonce);
+    $annonceId = $annonce->id;
+    settype($annonceId, "integer");
+    $this->annonceDao->update($annonceId, $annonce);
     if (sizeof($annonce->photos) > 0) {
       $photoIds = array();
       foreach ($annonce->photos as $photo) {
         array_push($photoIds, $photo->id);
       }
-      $this->photoDao->updateAnnonceId($photoIds, $annonce->id);
+      $this->photoDao->updateAnnonceId($photoIds, $annonceId);
     }
-    $res = $this->_findOne($annonce->id);
+    $res = $this->_findOne($annonceId);
     $this->annonceDao->disconnect();
     $this->sendReponse($res);
+  }
+
+  function delete($id) {
+    $this->annonceDao->connect();
+    settype($id, "integer");
+    $this->annonceDao->delete($id);
+    $this->annonceDao->disconnect();
+    header("HTTP/1.1 204 No Content");
   }
 }
 
