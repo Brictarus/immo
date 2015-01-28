@@ -150,8 +150,9 @@ class AnnonceDao extends GenericDao
     // construction de la requête
     $sql = 'SELECT a.id, a.label, a.date_creation, a.adresse, a.prix, count(pa.id) as nb_photos '
       . ' FROM ' . $this->tableName . ' a '
-      . ' INNER JOIN photo_annonce pa on pa.annonce_id = a.id '
-      . ' GROUP BY pa.annonce_id';
+      . ' LEFT OUTER JOIN photo_annonce pa on pa.annonce_id = a.id '
+      . ' GROUP BY pa.annonce_id '
+      . ' ORDER BY a.date_creation DESC';
     /*echo $sql;*/
 
     // Execution de la requête
