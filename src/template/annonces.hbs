@@ -18,8 +18,8 @@
           <!--<div class="row">Ceci est une description bidon blabla bla. Ceci est une description bidon blabla bla. Ceci est une description bidon blabla bla. Ceci est une description bidon blabla bla. Ceci est une description bidon blabla bla. Ceci est une description bidon blabla bla. Ceci est une description bidon blabla bla. Ceci est une description bidon blabla bla. Ceci est une description bidon blabla bla. Ceci est une description bidon blabla bla. </div>-->
           <div class="row creation-date">Ajoutée le {{formatDate this.date_creation "DD/MM/YYYY"}}
             à {{formatDate this.date_creation "HH:mm"}}</div>
-          <div class="row city">Lyon 3</div>
-          <div class="row price">220 000 €</div>
+          {{#if this.adresse}}<div class="row city">{{this.adresse}}</div>{{/if}}
+          {{#if this.prix}}<div class="row price">{{this.prix}} €</div>{{/if}}
         </div>
       </div>
     </div>
