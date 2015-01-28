@@ -4,18 +4,16 @@
       <div class="col-md-12">
         <div class="col-md-2 col-xs-4">
           <div class="thumbnail-annonce">
-            <a href="{{../config.urlRoot}}/#annonce/{{this.id}}"><img class="img-thumbnail"
-                                                                      src="favicon.png"
-                                                                      alt=""></a>
-
-            <div class="pics-nb">3</div>
+            <a href="{{../config.urlRoot}}/#annonce/{{this.id}}">
+              <img class="img-thumbnail" src="favicon.png" alt="">
+            </a>
+            <div class="pics-nb">{{this.nb_photos}}</div>
           </div>
         </div>
         <div class="col-md-10 col-xs-8">
           <div class="row title">
             <a href="{{../config.urlRoot}}/#annonce/{{this.id}}">{{this.label}}</a>
           </div>
-          <!--<div class="row">Ceci est une description bidon blabla bla. Ceci est une description bidon blabla bla. Ceci est une description bidon blabla bla. Ceci est une description bidon blabla bla. Ceci est une description bidon blabla bla. Ceci est une description bidon blabla bla. Ceci est une description bidon blabla bla. Ceci est une description bidon blabla bla. Ceci est une description bidon blabla bla. Ceci est une description bidon blabla bla. </div>-->
           <div class="row creation-date">Ajoutée le {{formatDate this.date_creation "DD/MM/YYYY"}}
             à {{formatDate this.date_creation "HH:mm"}}</div>
           {{#if this.adresse}}<div class="row city">{{this.adresse}}</div>{{/if}}
