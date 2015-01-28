@@ -42,7 +42,8 @@ define(['underscore',
 
           this.addImgFormView = new AddImageFormView({
             el: "#add-image-container",
-            photos: this.model.get('photos')
+            photos: this.model.get('photos'),
+            photo_favorite_id: this.model.get('photo_favorite_id')
           });
           this.addImgFormView.render();
           return this;
@@ -50,7 +51,6 @@ define(['underscore',
 
         onSubmitForm: function () {
           this.populateModel(this.model);
-          console.log(this.model.toJSON());
           if (this.model.isValid(true)) {
             this.model.save({}, {
               success: _.bind(function () {
@@ -92,7 +92,14 @@ define(['underscore',
             type_stationnement: this.$('input[name="type-stationnement"]:checked').val() || null
           };
           var photos = this.addImgFormView.getPhotos();
-          attrs.photos = (photos == null) ? null : photos.toJSON();
+          if (photos == null || photos.length == 0) {
+            attrs.photos = null;
+            attrs.photo_favorite_id = null;
+          } else {
+            attrs.photos = photos.toJSON();
+            var photoFavoriteId = this.$('input[name="favourite-pic"]:checked').val();
+            attrs.photo_favorite_id = (photoFavoriteId ? parseInt(photoFavoriteId) : null);
+          }
 
           model.set(attrs);
         },

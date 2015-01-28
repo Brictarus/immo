@@ -40,6 +40,20 @@
   width: 100%;
 }
 
+.image-list input[name="favourite-pic"] {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  background: url("../img/star-off.png") no-repeat;
+  background-size: contain;
+  width: 24px;
+  height: 24px;
+}
+
+.image-list input[name="favourite-pic"]:checked {
+  background: url("../img/star.png") no-repeat;
+  background-size: contain;
+}
+
 .annonces-list .thumbnail-annonce .pics-nb {
   position: relative;
   left: 89%;
@@ -102,6 +116,10 @@
 
 #add-image-container .image-list td {
   vertical-align: middle;
+}
+
+#add-image-container .photo-favourite-radio {
+  text-align: center;
 }
 
 .photo-remove.glyphicon-remove {

@@ -5,7 +5,11 @@
         <div class="col-md-2 col-xs-4">
           <div class="thumbnail-annonce">
             <a href="{{../config.urlRoot}}/#annonce/{{this.id}}">
-              <img class="img-thumbnail" src="favicon.png" alt="">
+              {{#if this.photo_favorite}}
+                <img class="img-thumbnail" src="data/thumbnails/{{this.photo_favorite.id}}.{{this.photo_favorite.extension}}" alt="">
+              {{else}}
+                <img class="img-thumbnail" src="favicon.png" alt="">
+              {{/if}}
             </a>
             <div class="pics-nb">{{this.nb_photos}}</div>
           </div>

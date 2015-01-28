@@ -1,3 +1,8 @@
+<td class="col-md-1 col-xs-2 col-sm-1 photo-favourite-radio">
+  {{#if model.id}}
+    <input type="radio" name="favourite-pic" value="{{model.id}}" {{ifinline model.favorite "checked"}} />
+  {{/if}}
+</td>
 <td class="col-md-1 col-xs-3 col-sm-2 photo-thumbnail">
   {{#if model.id}}
     <img src="data/thumbnails/{{model.id}}.{{model.extension}}"/>

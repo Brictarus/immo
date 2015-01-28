@@ -13,6 +13,18 @@ define(['underscore', 'backbone', 'model/photo', 'collection/photos', 'view/imag
 
         //this.photosIds = options.photosIds || [];
         this.photos = new Photos(options.photos || []);
+        if (this.photos.length > 0) {
+          if (options.photo_favorite_id) {
+            var favorite = this.photos.get(options.photo_favorite_id);
+            if (favorite) {
+              favorite.set("favorite", true);
+            } else {
+              this.photos.at(0).set("favorite", true);
+            }
+          } else {
+            this.photos.at(0).set("favorite", true);
+          }
+        }
       },
 
       getPhotosIds: function () {
@@ -120,6 +132,9 @@ define(['underscore', 'backbone', 'model/photo', 'collection/photos', 'view/imag
         /*var photo = new Backbone.Model(rawModel);
         this.photos.add(photo);*/
         var photo = this.imageUploadViews[options.tempId].model;
+        if (this.photos.length == 0) {
+          rawModel.favourite = true;
+        }
         photo.set(rawModel);
         this.photos.add(photo);
       },

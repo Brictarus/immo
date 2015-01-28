@@ -30,7 +30,8 @@ class AnnonceDao extends GenericDao
       "taxe_fonciere" => "integer",
       "taxe_habitation" => "integer",
       "type_logement" => "string",
-      "type_stationnement" => "string"
+      "type_stationnement" => "string",
+      "photo_favorite_id" => "integer"
     );
   }
 
@@ -59,7 +60,8 @@ class AnnonceDao extends GenericDao
       "taxe_fonciere" => $data->taxe_fonciere,
       "taxe_habitation" => $data->taxe_habitation,
       "type_logement" => $data->type_logement,
-      "type_stationnement" => $data->type_stationnement
+      "type_stationnement" => $data->type_stationnement,
+      "photo_favorite_id" => $data->photo_favorite_id
     );
   }
 
@@ -148,9 +150,10 @@ class AnnonceDao extends GenericDao
   function findAll($fields = null)
   {
     // construction de la requête
-    $sql = 'SELECT a.id, a.label, a.date_creation, a.adresse, a.prix, count(pa.id) as nb_photos '
+    $sql = 'SELECT a.id, a.label, a.date_creation, a.adresse, a.prix, count(pa.id) as nb_photos, a.photo_favorite_id, fav.extension as  fav_ext'
       . ' FROM ' . $this->tableName . ' a '
       . ' LEFT OUTER JOIN photo_annonce pa on pa.annonce_id = a.id '
+      . ' LEFT OUTER JOIN photo_annonce fav on fav.id = a.photo_favorite_id '
       . ' GROUP BY pa.annonce_id '
       . ' ORDER BY a.date_creation DESC';
     /*echo $sql;*/
@@ -164,6 +167,16 @@ class AnnonceDao extends GenericDao
     // récupération des resultats
     $tempArr = array();
     while ($row = $this->daoConnector->fetch_array($retval)) {
+      if ($row["fav_ext"] != null) {
+        settype($row["photo_favorite_id"], "integer");
+        $fav = array("id" => $row["photo_favorite_id"], "extension" => $row["fav_ext"]);
+        $row["photo_favorite"] = $fav;
+      } else {
+        $row["photo_favorite"] = null;
+      }
+      unset($row["photo_favorite_id"]);
+      unset($row["fav_ext"]);
+
       array_push($tempArr, $row);
     }
     return $tempArr;
