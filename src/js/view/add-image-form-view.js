@@ -85,22 +85,17 @@ define(['underscore', 'backbone', 'model/photo', 'collection/photos', 'view/imag
             return false;
           }
 
-          /*$('#submit-btn').hide(); //hide submit button
-           $('#loading-img').show(); //hide submit button
-           $("#output").html("");  */
+          options.tempId = this.imageUploadsCount;
+          var photo = new Photo({
+            nom: fname
+          });
+          this.addNewUpload(photo, this.imageUploadsCount++);
         }
         else {
           //Output error to older browsers that do not support HTML5 File API
           $("#output").html("Please upgrade your browser, because your current browser lacks some new features we need!");
           return false;
         }
-
-        //this.showError('OK, ca passe !');
-        options.tempId = this.imageUploadsCount;
-        var photo = new Photo({
-          nom: name
-        });
-        this.addNewUpload(photo, this.imageUploadsCount++);
       },
 
       addNewUpload: function (photo, index) {

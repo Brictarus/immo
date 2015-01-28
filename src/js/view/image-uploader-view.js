@@ -22,7 +22,7 @@ define(['backbone', 'hbs!template/image-uploader', 'i18n!nls/labels'],
       },
 
       render: function () {
-        this.$el.html(template({model: this.model.toJSON(), name: this.name, progress: this.progress}));
+        this.$el.html(template({model: this.model.toJSON(), progress: this.progress}));
         return this;
       },
 
