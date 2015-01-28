@@ -2,11 +2,12 @@ define(['underscore',
     'backbone',
     'model/annonce',
     'view/add-image-form-view',
+    'model/enum/type-stationnement',
     'hbs!template/annonce-form-view',
     'hbs!template/alert-bootstrap',
     'i18n!nls/labels',
     'backbone.validation'],
-  function (_, Backbone, Annonce, AddImageFormView, template,
+  function (_, Backbone, Annonce, AddImageFormView, TypeStationnementEnum, template,
             alertTemplate, labels) {
     var AnnonceFormView = Backbone.View.extend({
         events: {
@@ -35,7 +36,8 @@ define(['underscore',
           this.$el.html(template({
             labels: labels,
             model: this.model.toJSON(),
-            typesLogements: this.typesLogements
+            typesLogements: this.typesLogements,
+            typesStationnement: TypeStationnementEnum.values
           }));
 
           this.addImgFormView = new AddImageFormView({

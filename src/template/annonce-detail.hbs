@@ -31,25 +31,31 @@
           <dd>{{model.surface}} m²</dd>
 
           <dt>Nombre de chambres</dt>
-          <dd>{{ifinline model.nb_chambres model.nb_chambres labels.general.unknown}}</dd>
+          <dd>{{ifinline model.nb_chambres model.nb_chambres labels.general.blankValue}}</dd>
 
           <dt>Description</dt>
-          <dd class="text-justify">{{ifinline model.description model.description labels.general.unknown}}</dd>
+          <dd class="text-justify">{{ifinline model.description model.description labels.general.blankValue}}</dd>
 
           <dt>Prix</dt>
-          <dd>{{ifinline model.prix model.prix labels.general.unknown}} €</dd>
+          <dd>{{ifinline model.prix model.prix labels.general.blankValue}} €</dd>
 
           <dt>Adresse</dt>
-          <dd>{{ifinline model.adresse model.adresse labels.general.unknown}}</dd>
+          <dd>{{ifinline model.adresse model.adresse labels.general.blankValue}}</dd>
 
           <dt>Etage</dt>
           <dd>
-            {{ifinline model.etage model.etage labels.general.unknown}}
+            {{ifinline model.etage model.etage labels.general.blankValue}}
             {{#if model.nb_etages}}/{{model.nb_etages}}{{/if}}
           </dd>
 
           <dt>Charges annuelles</dt>
-          <dd>{{ifinline model.montant_charges model.montant_charges labels.general.unknown}} €</dd>
+          <dd>
+            {{#if model.montant_charges}}
+              {{model.montant_charges}} €
+            {{else}}
+              {{labels.general.blankValue}}
+            {{/if}}
+          </dd>
 
           <dt>Charges</dt>
           <dd>
@@ -62,13 +68,25 @@
             </ul>
           </dd>
 
-          <dt>Taxe d'habitation</dt>
-          <dd>{{ifinline model.taxe_habitation model.taxe_habitation labels.general.unknown}} €</dd>
+          <dt>{{labels.annonce.taxeHabitation}}</dt>
+          <dd>
+            {{#if model.taxe_habitation}}
+              {{model.taxe_habitation}} €
+            {{else}}
+              {{labels.general.blankValue}}
+            {{/if}}
+          </dd>
 
-          <dt>Taxe foncière</dt>
-          <dd>{{ifinline model.taxe_fonciere model.taxe_fonciere labels.general.unknown}} €</dd>
+          <dt>{{labels.annonce.taxeFonciere}}</dt>
+          <dd>
+            {{#if model.taxe_fonciere}}
+              {{model.taxe_fonciere}} €
+            {{else}}
+              {{labels.general.blankValue}}
+            {{/if}}
+          </dd>
 
-          <dt>Ascenceur</dt>
+          <dt>{{labels.annonce.elevator}}</dt>
           <dd>
             {{#ifequals model.ascenceur false}}
               {{labels.general.no}}
@@ -76,12 +94,12 @@
               {{#ifequals model.ascenceur true}}
                 {{labels.general.yes}}
               {{else}}
-                {{labels.general.unknown}}
+                {{labels.general.blankValue}}
               {{/ifequals}}
             {{/ifequals}}
           </dd>
 
-          <dt>Cave</dt>
+          <dt>{{labels.annonce.cave}}</dt>
           <dd>
             {{#ifequals model.cave false}}
               {{labels.general.no}}
@@ -89,12 +107,12 @@
               {{#ifequals model.cave true}}
                 {{labels.general.yes}}
               {{else}}
-                {{labels.general.unknown}}
+                {{labels.general.blankValue}}
               {{/ifequals}}
             {{/ifequals}}
           </dd>
 
-          <dt>Cuisine ouverte</dt>
+          <dt>{{labels.annonce.openKitchen}}</dt>
           <dd>
             {{#ifequals model.cuisine_ouverte false}}
               {{labels.general.no}}
@@ -102,12 +120,12 @@
               {{#ifequals model.cuisine_ouverte true}}
                 {{labels.general.yes}}
               {{else}}
-                {{labels.general.unknown}}
+                {{labels.general.blankValue}}
               {{/ifequals}}
             {{/ifequals}}
           </dd>
 
-          <dt>Stationnement</dt>
+          <dt>{{labels.annonce.stationnement}}</dt>
           <dd>
             {{#ifequals model.type_stationnement false}}
               {{labels.general.no}}
@@ -115,14 +133,14 @@
               {{#ifequals model.type_stationnement true}}
                 {{labels.general.yes}}
               {{else}}
-                {{labels.general.unknown}}
+                {{labels.general.blankValue}}
               {{/ifequals}}
             {{/ifequals}}
           </dd>
 
-          <dt>Type de stationnement</dt>
+          <dt>{{labels.annonce.typeStationnement.label}}</dt>
           <dd>
-            {{ifinline model.type_stationnement model.type_stationnement labels.general.unknown}}
+            {{ifinline typeStationnementLabel typeStationnementLabel labels.general.blankValue}}
           </dd>
 
         </dl>
