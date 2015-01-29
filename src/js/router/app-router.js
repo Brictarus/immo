@@ -4,7 +4,8 @@ define(['backbone', 'config', 'model/annonce', 'view/annonce-detail-view', 'view
     var AppRouter = Backbone.Router.extend({
         
       initialize: function() {
-          Backbone.history.start({ pushState: false, root: config.urlRoot });
+        App.view = null;
+        Backbone.history.start({ pushState: false, root: config.urlRoot });
       },
 
       routes: {
@@ -21,38 +22,46 @@ define(['backbone', 'config', 'model/annonce', 'view/annonce-detail-view', 'view
       main: function() {
         // Instanciation des vues
         App.creationMenu.showButtonNew().hideButtonUpdate();
+        App.view && App.view.remove();
         var annoncesListView = new AnnoncesListView({
             el: "#main"
         });
         annoncesListView.render();
+        App.view = annoncesListView;
       },
 
       detail: function(id) {
         App.creationMenu.showButtonNew().showButtonUpdate(id);
+        App.view && App.view.remove();
         $("html, body").animate({ scrollTop: 0 }, "slow");
-        new AnnonceDetailView({el : '#main', annonceId: id}).render();
+        var detailView = new AnnonceDetailView({el : '#main', annonceId: id}).render();
+        App.view = App.view;
       },
 
       updateAnnonce: function(id) {
+        App.view && App.view.remove();
         App.creationMenu.hideButtonNew().hideButtonUpdate();
         var annonce = new Annonce({id: id});
         annonce.fetch({
-          success: function() {
-            new AnnonceFormView({el : '#main', model: annonce}).render();
-          }
+          success: _.bind(function() {
+            App.view = new AnnonceFormView({el : '#main', model: annonce}).render();
+          }, this)
         });
       },
       
       newAnnonce: function() {
+        App.view && App.view.remove();
         App.creationMenu.hideButtonNew().hideButtonUpdate();
-        new AnnonceFormView({el : '#main'}).render();
+        App.view = new AnnonceFormView({el : '#main'}).render();
       },
       
       newAnnonceBonCoin: function() {
+        App.view && App.view.remove();
         App.creationMenu.hideButtonNew().hideButtonUpdate();
       },
       
       newAnnonceSeLoger: function() {
+        App.view && App.view.remove();
         App.creationMenu.hideButtonNew().hideButtonUpdate();
       }
     });

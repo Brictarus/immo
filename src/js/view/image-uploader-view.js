@@ -1,6 +1,6 @@
-define(['backbone', 'hbs!template/image-uploader', 'i18n!nls/labels'],
-  function (Backbone, template, labels) {
-    var ImageUploaderView = Backbone.View.extend({
+define(['backbone', 'view/custom-view', 'hbs!template/image-uploader', 'i18n!nls/labels'],
+  function (Backbone, CustomView, template, labels) {
+    var ImageUploaderView = CustomView.extend({
       tagName: 'tr',
 
       events: {

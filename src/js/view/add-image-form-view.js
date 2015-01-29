@@ -1,6 +1,7 @@
-define(['underscore', 'backbone', 'model/photo', 'collection/photos', 'view/image-uploader-view', 'hbs!template/add-image-form', 'hbs!template/alert-bootstrap', 'i18n!nls/labels'],
-  function (_, Backbone, Photo, Photos, ImageUploaderView, template, alertTemplate, labels) {
-    var AddImageFormView = Backbone.View.extend({
+define(['underscore', 'backbone', 'view/custom-view','model/photo', 'collection/photos',
+    'view/image-uploader-view', 'hbs!template/add-image-form', 'hbs!template/alert-bootstrap', 'i18n!nls/labels'],
+  function (_, Backbone, CustomView, Photo, Photos, ImageUploaderView, template, alertTemplate, labels) {
+    var AddImageFormView = CustomView.extend({
       events: {
         'change input:file#image_file': 'onFileChange',
         'submit form[name="form-add-image"]': 'onFormSubmit'

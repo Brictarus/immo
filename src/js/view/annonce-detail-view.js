@@ -1,8 +1,8 @@
-define(['underscore', 'backbone',
+define(['underscore', 'backbone', 'view/custom-view',
     'model/annonce', 'model/enum/type-stationnement', 'hbs!template/annonce-detail', 'config', 'i18n!nls/labels'],
-  function (_, Backbone, Annonce, TypeStationnementEnum, template, config, labels) {
+  function (_, Backbone, CustomView, Annonce, TypeStationnementEnum, template, config, labels) {
 
-    var AnnonceDtailView = Backbone.View.extend({
+    var AnnonceDtailView = CustomView.extend({
       initialize: function (options) {
         _.bindAll(this, "onAnnonceFetched");
         this.model = new Annonce({id: options.annonceId});

@@ -1,8 +1,8 @@
-define(['underscore', 'underscore.string', 'backbone', 'model/annonce',
+define(['underscore', 'underscore.string', 'backbone', 'view/custom-view', 'model/annonce',
         'hbs!template/new-annonce-menu'], 
-       function(_, _s, Backbone, Annonce, template) {
+       function(_, _s, Backbone, CustomView, Annonce, template) {
 
-  var NewAnnonceMenu = Backbone.View.extend({
+  var NewAnnonceMenu = CustomView.extend({
     events: {
       'click #new-annonce': "createNewAnnonce",
       'click .delete-current-annonce': "deleteCurrentAnnonce"

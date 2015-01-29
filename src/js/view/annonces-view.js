@@ -1,8 +1,8 @@
-define(['underscore', 'backbone', 
+define(['underscore', 'backbone', 'view/custom-view',
         'collection/annonces', 'hbs!template/annonces', 'config'], 
-       function(_, Backbone, Annonces, template, config) {
+       function(_, Backbone, CustomView, Annonces, template, config) {
 
-    var AnnoncesListView = Backbone.View.extend({
+    var AnnoncesListView = CustomView.extend({
         initialize: function() {
             _.bindAll(this, "onAnnoncesFetched");
             this.annonces = new Annonces();

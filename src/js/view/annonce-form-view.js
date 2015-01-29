@@ -1,5 +1,6 @@
 define(['underscore',
     'backbone',
+    'view/custom-view',
     'model/annonce',
     'view/add-image-form-view',
     'model/enum/type-stationnement',
@@ -7,9 +8,9 @@ define(['underscore',
     'hbs!template/alert-bootstrap',
     'i18n!nls/labels',
     'backbone.validation'],
-  function (_, Backbone, Annonce, AddImageFormView, TypeStationnementEnum, template,
+  function (_, Backbone, CustomView, Annonce, AddImageFormView, TypeStationnementEnum, template,
             alertTemplate, labels) {
-    var AnnonceFormView = Backbone.View.extend({
+    var AnnonceFormView = CustomView.extend({
         events: {
           'submit #annonce-form': 'onSubmitForm'
         },
@@ -47,6 +48,12 @@ define(['underscore',
           });
           this.addImgFormView.render();
           return this;
+        },
+
+        remove: function() {
+          Backbone.Validation.unbind(this);
+          this.stopListening();
+          AnnonceFormView.__super__.remove.apply(this, arguments);
         },
 
         onSubmitForm: function () {
