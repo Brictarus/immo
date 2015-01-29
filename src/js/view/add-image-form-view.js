@@ -110,6 +110,14 @@ define(['underscore', 'backbone', 'model/photo', 'collection/photos', 'view/imag
         }
       },
 
+      onFavouriteDeleted: function () {
+        if (this.photos.length > 0) {
+          var firstPhoto = this.photos.at(0);
+          firstPhoto.set({favorite: true});
+          firstPhoto.trigger("change");
+        }
+      },
+
       addNewUpload: function (photo, index) {
         var $tbody = this.$('.image-list > table > tbody');
         $tbody.append('<tr></tr>');
@@ -120,6 +128,7 @@ define(['underscore', 'backbone', 'model/photo', 'collection/photos', 'view/imag
           el: $tbody.find("tr:last-child")
         });
         this.imageUploadViews[index].render();
+        this.listenTo(this.imageUploadViews[index], "delete:favourite", this.onFavouriteDeleted);
       },
 
       onUploadProgress: function (event, position, total, percentComplete, options) {
@@ -133,7 +142,7 @@ define(['underscore', 'backbone', 'model/photo', 'collection/photos', 'view/imag
         this.photos.add(photo);*/
         var photo = this.imageUploadViews[options.tempId].model;
         if (this.photos.length == 0) {
-          rawModel.favourite = true;
+          rawModel.favorite = true;
         }
         photo.set(rawModel);
         this.photos.add(photo);

@@ -11,9 +11,7 @@ define(['backbone', 'hbs!template/image-uploader', 'i18n!nls/labels'],
         /*this.name = options.name;*/
         this.index = options.index;
         this.model = options.model;
-        if (this.model.isNew()) {
-          this.listenToOnce(this.model, "change", this.onModelChange);
-        }
+        this.listenTo(this.model, "change", this.onModelChange);
         this.progress = this.model.isNew() ? 0 : 100;
       },
 
@@ -32,8 +30,19 @@ define(['backbone', 'hbs!template/image-uploader', 'i18n!nls/labels'],
       },
 
       removePhoto: function() {
+        var favoriteId = this.$('input[name="favourite-pic"]:checked').val();
+        if (favoriteId) {
+          favoriteId = parseInt(favoriteId);
+          var favorite = this.model.id == favoriteId;
+        }
         this.$el.fadeOut(_.bind(function() {
-          this.model.destroy();
+          this.model.destroy({
+            success: _.bind(function() {
+              if (favorite) {
+                this.trigger("delete:favourite");
+              }
+            }, this)
+          });
           this.remove();
         }, this));
       }

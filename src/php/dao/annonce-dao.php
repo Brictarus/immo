@@ -143,7 +143,7 @@ class AnnonceDao extends GenericDao
     $sql = "UPDATE " . $this->tableName .
       " SET " . join(", ", $assignments) .
       " WHERE $idField = $id";
-    //echo $sql . "<br>";
+    /*echo $sql . "<br>";*/
     $this->daoConnector->query($sql);
   }
 
