@@ -147,6 +147,13 @@ class AnnonceDao extends GenericDao
     $this->daoConnector->query($sql);
   }
 
+  function updatePhotoPrincipaleId($id, $photo_id) {
+    $sql = "UPDATE $this->tableName" .
+      " SET photo_favorite_id = " . ($photo_id == null ? "null" : $photo_id) .
+      " WHERE id = $id";
+    $this->daoConnector->query($sql);
+  }
+
   function findAll($fields = null)
   {
     // construction de la requête

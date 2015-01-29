@@ -129,6 +129,7 @@ class AnnonceController extends GenericController
     if ($id != null) {
       $conn = $this->annonceDao->connect();
       $this->photoDao->connect($conn);
+      $this->annonceDao->updatePhotoPrincipaleId($id, null);
       $this->photoDao->deleteByAnnonceId($id);
       $this->annonceDao->delete($id);
       $this->annonceDao->disconnect();
