@@ -34,7 +34,13 @@
           <dd>{{ifinline model.nb_chambres model.nb_chambres labels.general.blankValue}}</dd>
 
           <dt>Description</dt>
-          <dd class="text-justify">{{ifinline model.description model.description labels.general.blankValue}}</dd>
+          <dd class="text-justify">
+            {{#if model.description}}
+              {{breaklines model.description}}
+            {{else}}
+              {{labels.general.blankValue}}
+            {{/if}}
+          </dd>
 
           <dt>Prix</dt>
           <dd>{{ifinline model.prix model.prix labels.general.blankValue}} €</dd>

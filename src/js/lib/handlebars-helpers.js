@@ -209,6 +209,22 @@ define(['handlebars-orig', 'moment', 'underscore.string'], function(Handlebars, 
             return block.inverse();
         }
     });
+
+    function urlify(text) {
+        var urlRegex = /(https?:\/\/[^\s]+)/g;
+        return text.replace(urlRegex, function(url) {
+            return '<a href="' + url + '">' + url + '</a>';
+        })
+        // or alternatively
+        // return text.replace(urlRegex, '<a href="$1">$1</a>')
+    }
+
+    Handlebars.registerHelper('breaklines', function(text) {
+        text = Handlebars.Utils.escapeExpression(text);
+        text = text.replace(/(\r\n|\n|\r)/gm, '<br>');
+        text = urlify(text);
+        return new Handlebars.SafeString(text);
+    });
    
     return Handlebars;
 
