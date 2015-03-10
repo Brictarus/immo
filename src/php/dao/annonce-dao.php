@@ -8,6 +8,7 @@ class AnnonceDao extends GenericDao
   {
     parent::__construct("annonce");
     $this->entityFields = array(
+      "id" => "integer",
       "adresse" => "string",
       "ascenceur" => "boolean",
       "cave" => "boolean",
@@ -38,6 +39,7 @@ class AnnonceDao extends GenericDao
   private function getMappings($data)
   {
     return array(
+      "id" => $data->id,
       "adresse" => $data->adresse,
       "ascenceur" => $data->ascenceur,
       "cave" => $data->cave,
@@ -96,7 +98,7 @@ class AnnonceDao extends GenericDao
     $values = array();
     foreach ($fixedMappings as $key => $value) {
       $fieldType = $this->entityFields[$key];
-      if ($fieldType != null) {
+      if ($fieldType != null && $key != "id") {
         if ($value != null) {
           array_push($keys, $key);
           $val = $value;

@@ -3,6 +3,7 @@
 include_once '../dao/annonce-dao.php';
 include_once '../dao/photo-dao.php';
 include_once 'generic-controller.php';
+include_once '../service/annonce-service.php';
 
 class AnnonceController extends GenericController
 {
@@ -12,11 +13,11 @@ class AnnonceController extends GenericController
   {
     $this->annonceDao = new AnnonceDao();
     $this->photoDao = new PhotoDao();
+    $this->annonceService = new AnnonceService();
   }
 
   function handleRequest()
   {
-    header('Access-Control-Allow-Origin: *');
     $body = null;
     switch ($_SERVER['REQUEST_METHOD']) {
       case 'POST':
@@ -89,17 +90,8 @@ class AnnonceController extends GenericController
   {
     $conn = $this->annonceDao->connect();
     $this->photoDao->connect($conn);
-    $res = $this->annonceDao->create($annonce);
-    if (sizeof($annonce->photos) > 0) {
-      $photoIds = array();
-      foreach ($annonce->photos as $photo) {
-        $photoId = $photo->id;
-        settype($photoId, "integer");
-        array_push($photoIds, $photoId);
-      }
-      $this->photoDao->updateAnnonceId($photoIds, $res);
-    }
-    $new = $this->_findOne($res);
+    $annonce->id = null;
+    $new = $this->annonceService->create($annonce, $this->annonceDao, $this->photoDao);
     $this->annonceDao->disconnect();
     $this->sendReponse($new);
   }
@@ -139,9 +131,9 @@ class AnnonceController extends GenericController
 }
 
 
-error_reporting(E_ALL & ~E_DEPRECATED & ~E_NOTICE);
+//error_reporting(E_ALL & ~E_DEPRECATED & ~E_NOTICE);
 $controller = new AnnonceController();
 $controller->handleRequest();
-error_reporting(E_ALL);
+//error_reporting(E_ALL);
 
 ?>

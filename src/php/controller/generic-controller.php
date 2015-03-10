@@ -1,6 +1,5 @@
 <?php
 
-require_once '../jsonwrapper/jsonwrapper.php';
 
 class GenericController {
   function xml_encode($mixed, $domElement = NULL, $DOMDocument = NULL) {
@@ -36,12 +35,12 @@ class GenericController {
   }
   
   function sendDataAsJson($data) {
-    header('Content-Type:application/json');
+    header('Content-Type:application/json; charset=utf-8');
     echo json_encode($data);
   }
   
   function sendDataAsXml($data) {
-    header('Content-Type:text/xml');
+    header('Content-Type:text/xml; charset=utf-8');
     echo $this->xml_encode($data);
   }
   
