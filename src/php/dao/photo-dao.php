@@ -32,9 +32,19 @@ class PhotoDao extends GenericDao
     }
   }
 
-  function findByAnnonceId($annonceId) {
+  function findByAnnonceId($annonceId)
+  {
+    return $this->_findByAnnonceId($annonceId, "*");
+  }
+
+  function findIdsByAnnonceId($annonceId)
+  {
+    return $this->_findByAnnonceId($annonceId, "id");
+  }
+
+  private function _findByAnnonceId($annonceId, $cols) {
     // construction de la requête
-    $sql = 'SELECT * '
+    $sql = "SELECT {$cols} "
       . ' FROM ' . $this->tableName
       . ' WHERE annonce_id = ' . $annonceId;
 
@@ -54,6 +64,15 @@ class PhotoDao extends GenericDao
 
   function deleteByAnnonceId($annonceId)
   {
+    $main_folder = '../../data/pics/'; //upload directory ends with / (slash)
+    $thumb_folder = '../../data/thumbnails/'; //upload directory ends with / (slash)
+    $ids = $this->_findByAnnonceId($annonceId, "id, extension");
+    foreach ($ids as $tmp) {
+      $filename = "{$tmp["id"]}.{$tmp["extension"]}";
+      unlink($main_folder . $filename);
+      unlink($thumb_folder . $filename);
+    }
+
     // construction de la requête
     $sql = 'DELETE FROM ' . $this->tableName
       . ' WHERE annonce_id = ' . $annonceId;

@@ -170,11 +170,14 @@ class LeBonCoinAnnonceService {
    */
   protected function getDescription($finder, $srcUrl)
   {
-    $queryResult = $finder->query("//div[@class='content']");
+    $queryResult = $finder->query("//div[contains(concat(' ', normalize-space(@class), ' '), ' AdviewContent ')]/div[contains(concat(' ', normalize-space(@class), ' '), ' content ')]");
     if ($queryResult != null && $queryResult->length > 0) {
       $textContent = preg_replace('/\s+/', ' ', $queryResult->item(0)->textContent);
       $textContent = str_replace('²', '2', $textContent);
       $textContent = $this->suppr_accents($textContent);
+      if (strlen($textContent) == 0) {
+        $textContent = "Erreur a la recuperation de la description de l'annonce";
+      }
       return $textContent . "\r\n\r\n" . $srcUrl;
     }
     return $srcUrl;

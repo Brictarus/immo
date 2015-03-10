@@ -1,10 +1,11 @@
 define(['underscore', 'underscore.string', 'backbone', 'view/custom-view', 'model/annonce',
-        'hbs!template/new-annonce-menu'], 
-       function(_, _s, Backbone, CustomView, Annonce, template) {
+        'hbs!template/new-annonce-menu', 'view/lbc-external-modal'],
+       function(_, _s, Backbone, CustomView, Annonce, template, LeBonCoinView) {
 
   var NewAnnonceMenu = CustomView.extend({
     events: {
       'click #new-annonce': "createNewAnnonce",
+      'click #new-annonce-leboncoin': "createNewAnnonceLbc",
       'click .delete-current-annonce': "deleteCurrentAnnonce"
     },
 
@@ -28,6 +29,13 @@ define(['underscore', 'underscore.string', 'backbone', 'view/custom-view', 'mode
     
     createNewAnnonce: function() {
       App.router.navigate('#nouvelle-annonce', {trigger: true});
+    },
+
+    createNewAnnonceLbc: function() {
+      if (!this.lbc) {
+        this.lbc = new LeBonCoinView({ el : '#menu-modal-container' });
+      }
+      this.lbc.render();
     },
     
     showButtonNew: function() {
