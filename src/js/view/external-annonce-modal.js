@@ -29,8 +29,7 @@ define(['underscore', 'backbone', 'view/custom-view',
 
       onSaveSuccess: function (response) {
         var $modal = this.$('#external-annonce-modal');
-        this.$('.save-external').button('reset');
-        this.$('.reset').attr('disabled', false);
+        this.restoreButtonsState();
         $modal.one('hidden.bs.modal', function () {
           App.router.navigate('#annonce/' + response.id, {trigger: true});
         });
@@ -48,7 +47,14 @@ define(['underscore', 'backbone', 'view/custom-view',
             _.bind(this.onSaveSuccess, this),
             "json"
           );
+        } else {
+          this.restoreButtonsState();
         }
+      },
+
+      restoreButtonsState: function() {
+        this.$('.save-external').button('reset');
+        this.$('.reset').attr('disabled', false);
       }
 
     });

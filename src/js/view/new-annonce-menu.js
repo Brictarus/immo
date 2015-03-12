@@ -1,11 +1,12 @@
 define(['underscore', 'underscore.string', 'backbone', 'view/custom-view', 'model/annonce',
-        'hbs!template/new-annonce-menu', 'view/lbc-external-modal'],
-       function(_, _s, Backbone, CustomView, Annonce, template, LeBonCoinView) {
+        'hbs!template/new-annonce-menu', 'view/lbc-external-modal', 'view/seloger-external-modal'],
+       function(_, _s, Backbone, CustomView, Annonce, template, LeBonCoinView, SeLogerView) {
 
   var NewAnnonceMenu = CustomView.extend({
     events: {
       'click #new-annonce': "createNewAnnonce",
       'click #new-annonce-leboncoin': "createNewAnnonceLbc",
+      'click #new-annonce-seloger': "createNewAnnonceSeLoger",
       'click .delete-current-annonce': "deleteCurrentAnnonce"
     },
 
@@ -36,6 +37,13 @@ define(['underscore', 'underscore.string', 'backbone', 'view/custom-view', 'mode
         this.lbc = new LeBonCoinView({ el : '#menu-modal-container' });
       }
       this.lbc.render();
+    },
+
+    createNewAnnonceSeLoger: function() {
+      if (!this.seloger) {
+        this.seloger = new SeLogerView({ el : '#menu-modal-container' });
+      }
+      this.seloger.render();
     },
     
     showButtonNew: function() {
