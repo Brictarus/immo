@@ -1,6 +1,7 @@
 <?php
 require_once 'generic-controller.php';
 require_once "../service/bon-coin-service.php";
+require_once "../service/se-loger-service.php";
 
 class ExternalAnnonceController extends GenericController {
   function handleRequest()
@@ -10,7 +11,19 @@ class ExternalAnnonceController extends GenericController {
       case 'POST':
         if (isset($_GET['url'])) {
           $srcUrl = $_GET['url'];
-          $service = new LeBonCoinAnnonceService();
+          $service = null;
+          $pos = strrpos($srcUrl, "leboncoin.fr");
+          if ($pos !== false) {
+            $service = new LeBonCoinAnnonceService();
+          } else {
+            $pos = strrpos($srcUrl, "seloger.com");
+            if ($pos !== false) {
+              $service = new SeLogerAnnonceService();
+            } else {
+              header('HTTP/1.1 400 Bad Request');
+              return;
+            }
+          }
           $res = $service->createFromUrl($srcUrl);
           $this->sendReponse($res);
         } else {

@@ -163,7 +163,7 @@ class AnnonceDao extends GenericDao
       . ' FROM ' . $this->tableName . ' a '
       . ' LEFT OUTER JOIN photo_annonce pa on pa.annonce_id = a.id '
       . ' LEFT OUTER JOIN photo_annonce fav on fav.id = a.photo_favorite_id '
-      . ' GROUP BY pa.annonce_id '
+      . ' GROUP BY a.id '
       . ' ORDER BY a.date_creation DESC';
     /*echo $sql;*/
 

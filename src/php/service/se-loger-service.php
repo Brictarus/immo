@@ -5,11 +5,8 @@ require_once '../dao/photo-dao.php';
 require_once '../dao/annonce-dao.php';
 require_once '../service/annonce-service.php';
 
-function printLine($arg) {
-  echo $arg . '<br>';
-}
 
-class LeBonCoinAnnonceService {
+class SeLogerAnnonceService {
 
   function __construct() {
     $this->dao = new PhotoDao();
@@ -20,8 +17,7 @@ class LeBonCoinAnnonceService {
   function createFromUrl($srcUrl) {
     $html = file_get_contents($srcUrl);
     $dom = new DOMDocument();
-    //@$dom->loadHTML('<?xml encoding="UTF-8">' . $html);
-    @$dom->loadHTML($html);
+    @$dom->loadHTML('<?xml encoding="UTF-8">' . $html);
 
     $annonce = new stdClass();
     $annonce->label = $this->getLabel($dom);
@@ -29,7 +25,7 @@ class LeBonCoinAnnonceService {
     $finder = new DomXPath($dom);
 
     $annonce->id = null;
-    $annonce->prix = $this->getPrice($finder);
+    $annonce->prix = $this->getPrice($dom);
     $annonce->type_logement = $this->getTypeLogement($finder);
     $annonce->surface = $this->getSurface($finder);
     $annonce->adresse = $this->getAdresse($finder);
@@ -54,7 +50,7 @@ class LeBonCoinAnnonceService {
     $annonce->type_stationnement = null;
     $annonce->photo_favorite_id = null;
 
-    $photoUrls = $this->getPhotoUrls($dom);
+    $photoUrls = $this->getPhotoUrls($finder);
 
     $conn = $this->annonceDao->connect();
     $this->dao->connect($conn);
@@ -75,6 +71,8 @@ class LeBonCoinAnnonceService {
     $this->annonceDao->disconnect();
 
     return $result;
+
+    return "";
   }
 
   private function uploadPhotosFromUrl($photoUrls)
@@ -102,26 +100,49 @@ class LeBonCoinAnnonceService {
    */
   private function getLabel($dom)
   {
-    $textContent = $dom->getElementById('ad_subject')->textContent;
-    $textContent = str_replace('²', '2', $textContent);
-    $textContent = $this->suppr_accents($textContent);
-    return $textContent;
+    $h1List = $dom->getElementsByTagName('h1');
+    if ($h1List->length > 0) {
+      $h1 = $h1List->item(0);
+      $textContent = $h1->textContent;
+      $textContent = str_replace("\n", ' ', $textContent);
+      $textContent = preg_replace('/\s+/', ' ', $textContent);
+      //$textContent = $this->suppr_accents($textContent);
+      return $textContent;
+    } else {
+      return "titre indéfini";
+    }
   }
 
   /**
    * @param $finder
    * @return int
    */
-  protected function getPrice($finder) {
+  protected function getPrice($dom) {
     $res = null;
-    $queryResult = $finder->query("//span[contains(@class, 'price')]");
-    if ($queryResult != null && $queryResult->length > 0) {
-      $rawText = $queryResult->item(0)->textContent;
+    $queryResult = $dom->getElementById("price");
+    if ($queryResult != null) {
+      $rawText = $queryResult->textContent;
       if ($rawText != null && strlen($rawText) > 0) {
-        $res = intval(str_replace(' ', '', $rawText));
+        $res = $this->parseInteger($rawText);
       }
     }
     return $res;
+  }
+
+  private function parseInteger($text) {
+    $price = 0;
+    $index = 0;
+    $text = str_replace(' ', '', $text);
+    $length = strlen($text);
+    while ($index < $length) {
+      $char = $text[$index];
+      if (ctype_digit($char) === true) {
+        $price *= 10;
+        $price += intval($char);
+      }
+      $index++;
+    }
+    return $price;
   }
 
   /**
@@ -130,11 +151,7 @@ class LeBonCoinAnnonceService {
    */
   protected function getTypeLogement($finder)
   {
-    $queryResult = $finder->query('//th[text()="Pièces : "]/../td');
-    if ($queryResult != null && $queryResult->length > 0) {
-      return utf8_encode('T' . $queryResult->item(0)->textContent);
-    }
-    return null;
+    return "T3";
   }
 
   /**
@@ -143,9 +160,10 @@ class LeBonCoinAnnonceService {
    */
   protected function getSurface($finder)
   {
-    $queryResult = $finder->query('//th[text()="Surface : "]/../td');
+    $queryResult = $finder->query("//ol[contains(concat(' ', normalize-space(@class), ' '), ' description-liste ')]/li[contains(text(), 'Surface')]");
     if ($queryResult != null && $queryResult->length > 0) {
-      return intval($queryResult->item(0)->textContent);
+      $surface = $this->parseInteger($queryResult->item(0)->textContent);
+      return $surface;
     }
     return null;
   }
@@ -156,11 +174,21 @@ class LeBonCoinAnnonceService {
    */
   protected function getAdresse($finder)
   {
-    $queryResult = $finder->query('//th[text()="Ville :"]/../td');
+    $queryResult = $finder->query("//h2[contains(concat(' ', normalize-space(@class), ' '), ' detail-subtitle ')]/span");
     if ($queryResult != null && $queryResult->length > 0) {
-      return utf8_encode($queryResult->item(0)->textContent);
+      $textContent = trim($queryResult->item(0)->textContent);
+      if ($this->startsWith($textContent, "à ") && strlen($textContent) > 2) {
+        $textContent = substr($textContent, 2);
+      }
+      $result = ltrim($textContent);
+      return $result;
     }
     return null;
+  }
+
+  private function startsWith($haystack, $needle) {
+    // search backwards starting from haystack length characters from the end
+    return $needle === "" || strrpos($haystack, $needle, -strlen($haystack)) !== FALSE;
   }
 
   /**
@@ -170,15 +198,16 @@ class LeBonCoinAnnonceService {
    */
   protected function getDescription($finder, $srcUrl)
   {
-    $queryResult = $finder->query("//div[contains(concat(' ', normalize-space(@class), ' '), ' AdviewContent ')]/div[contains(concat(' ', normalize-space(@class), ' '), ' content ')]");
+    $queryResult = $finder->query("//*[contains(concat(' ', normalize-space(@class), ' '), ' description ')]");
     if ($queryResult != null && $queryResult->length > 0) {
       $textContent = preg_replace('/\s+/', ' ', $queryResult->item(0)->textContent);
-      $textContent = str_replace('²', '2', $textContent);
-      $textContent = $this->suppr_accents($textContent);
+      //$textContent = str_replace('²', '2', $textContent);
+      //$textContent = $this->suppr_accents($textContent);
       if (strlen($textContent) == 0) {
         $textContent = "Erreur a la recuperation de la description de l'annonce";
       }
-      return $textContent . "\r\n\r\n" . $srcUrl;
+      $result = $textContent . "\r\n\r\n" . $srcUrl;
+      return $result;
     }
     return $srcUrl;
   }
@@ -187,20 +216,14 @@ class LeBonCoinAnnonceService {
    * @param $dom
    * @return array of image urls
    */
-  protected function getPhotoUrls($dom)
+  protected function getPhotoUrls($finder)
   {
     $res = array();
-    $thumbsContainer = $dom->getElementById('thumbs_carousel');
-    if ($thumbsContainer != null) {
-      $images = $thumbsContainer->getElementsByTagName('span');
-      foreach ($images as $image) {
-        $style = $image->getAttribute('style');
-        if ($style != null) {
-          $prefixSize = strlen("background-image: url('");
-          $url = substr($style, $prefixSize, strlen($style) - $prefixSize - 3);
-          $mUrl = str_replace("thumbs", "images", $url);
-          array_push($res, $mUrl);
-        }
+    $imageTags = $finder->query("//*[contains(concat(' ', normalize-space(@class), ' '), ' carrousel_image_visu ')]"); // $dom->getElementById('thumbs_carousel');
+    if ($imageTags != null) {
+      foreach ($imageTags as $image) {
+        $url = $image->getAttribute('src');
+        array_push($res, $url);
       }
     }
     return $res;

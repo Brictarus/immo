@@ -36,3 +36,5 @@ class AnnonceService {
     return $entity;
   }
 }
+
+?>
